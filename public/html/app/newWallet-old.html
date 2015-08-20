@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="wallet">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coinvoy secure bitcoin wallet">
+    <meta name="author" content="ilkeryasin">
+    <link rel="shortcut icon" href="/static/img/favicon.ico?v=0.02">
+
+    <meta name="keywords" content="coinvoy, secure, bitcoin, wallet, web wallet, exchange" />
+    <meta property="og:title" content="Coinvoy" />
+    <meta property="og:description" content="Coinvoy secure bitcoin wallet" />
+    <meta property="og:image" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:title" content="Coinvoy" />
+    <meta name="twitter:description" content="Coinvoy secure bitcoin wallet" />
+    <meta name="twitter:image" content="" />
+    
+
+    <title> Coinvoy Bitcoin Wallet - The best, most secure wallet with instant exchange </title>
+  
+  <!-- Bootstrap -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="/static/css/style.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="/static/img/fav.png">
+
+</head>
+<body ng-controller="walletBody" style="font-family:Helvetica, arial;">
+    <div class="container" style="width:100%;margin-bottom:30px;">
+        <div class="row" style="padding:25px 30px;background-color:#96a46e;color:#fff;">
+            <div class="col-sm-4">
+                <a href="./index.html">
+                    <div style="font-size:28px;">
+                        Coinvoy Web Wallet
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-8" style="font-size:18px;">
+                <a href="./recoverPIN.html" style="float:right;padding:15px;">
+                    Recover PIN
+                </a>
+                <a href="./newWallet.html" style="float:right;padding:15px;">
+                    New Wallet
+                </a>
+                <a href="./wallet.html" style="float:right;padding:15px;">
+                    Wallet
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" ng-repeat="question in questions">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-5">
+                    {{question.question}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-3">
+                    <b>{{question.label}}</b>
+                </div>
+                <div class="col-sm-6">
+                    <input ng-model="question.value" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;margin-bottom:15px;">
+            <div class="col-sm-8 col-sm-offset-2" style="text-align:center;">
+                <b>Important Notice!</b><br>This will be your PIN that is required to send/use your wallet. Even it can be recovered, it is advised you to never forget this.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-3">
+                    <b>Wallet PIN</b>
+                </div>
+            <div class="col-sm-6">
+                <input type="password" ng-model="walletPin" ng-change="checkPin()">
+            </div>
+        </div>
+        <div class="row" style="text-align:center;">
+            <button class="btn btn-lg btn-primary" ng-click="generateWallet()">Done!</button>
+        </div>
+        <div class="row" style="text-align:center;">
+            <progress ng-show="progress" max="100" value="{{progress}}"></progress>
+            <div ng-show="keysGenerated" style="color:#5a6;">
+                Wallet is ready!
+            </div>
+        </div>
+        <div class="row" style="text-align:center;">
+            <div ng-repeat="address in wallet.genAddresses">
+                <div>{{address.address}}</div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+<!-- load scripts using require.js -->
+<script type="text/javascript" src="/static/js/modules/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/modules/bitcoinjs.js"></script>
+<script type="text/javascript" src="/static/js/modules/sha1.js"></script>
+<script type="text/javascript" src="/static/js/modules/pbkdf2.js"></script>
+<script type="text/javascript" src="/static/js/modules/aes.min.js"></script>
+<script type="text/javascript" src="/static/js/controllers/wallet.js"></script>
+<script type="text/javascript" src="/static/js/controllers/newWalletController.js"></script>
+
+<!-- <script type="text/javascript" src="../js/bootstrap.min.js"></script> -->
+<script type="text/javascript">
+    var username = "alpdeniz@gmail.com";
+    var seed = "salt566";
+</script>
+</body>
+</html>

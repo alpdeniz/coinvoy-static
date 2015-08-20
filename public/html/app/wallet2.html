@@ -1,0 +1,131 @@
+<div class="">
+    <div class="row" style="background-color:#B6C78E;">
+        <div class="col-sm-8 col-sm-offset-2" style="padding:6px">
+            <div class="row">
+                <div class="col-sm-3" style="padding:3px;text-align:center;cursor:pointer;">
+                    {{msgs.wallet.translate()}}
+                </div>
+                <div class="col-sm-3" style="padding:3px;text-align:center;cursor:pointer;">
+                    {{msgs.send.translate()}}
+                </div>
+                <div class="col-sm-3" style="padding:3px;text-align:center;cursor:pointer;">
+                    {{msgs.receive.translate()}}
+                </div>
+                <div class="col-sm-3" style="padding:3px;text-align:center;cursor:pointer;">
+                    {{msgs.settings.translate()}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="" style="height:100%;overflow:hidden;">
+    <div class="mainCol" style="width:70%;margin-left:15%;">
+        <div ng-show="wallet.allTxs.length>0" style="min-height:300px;">
+            <div style="padding:78px 15px;margin:20px auto;border-radius:50%;border:2px solid #999;width:200px;height:200px;font-size:30px;">
+                {{wallet.balance}} BTC
+            </div>
+            <div class="" style="">
+                <xchart id='myChart' style="height: 300px;margin-top:20px;" data="data" type="chartType" opts="chartOpts"></xchart>
+            </div>
+            <div class="" style="text-align:center;font-size:16px;padding:6px;">
+                {{msgs.transactionRecords.translate()}}
+            </div>
+            <div class="" style="margin-bottom:40px;">
+                <div class="row tx" ng-repeat="tx in wallet.recentTxs" ng-class="{true:'tx-in', false:'tx-out'}[tx.amount>0]" ng-click="showTransaction(tx)">
+                    <div class="col-sm-4 txDate">{{tx.date}}</div>
+                    <div class="col-sm-3 txAmount">{{tx.amount}} BTC</div>
+                    <div class="col-sm-4 txInfo"><div ng-if="!tx.confirmed">{{msgs.unconfirmed.translate()}}</div></div>
+                    <div class="col-sm-1" ng-class="{true: 'txInImg', false: 'txOutImg'}[tx.amount>0]"></div>
+                    <!-- <span class="col-sm 7 txInfo">{{tx.from}} BTC</span> -->
+                </div>
+            </div>
+        </div>
+        <div ng-show="wallet.allTxs.length==0" style="min-height:500px;text-align:center;font-size:16px;font-weight:600;">
+            <div class="" style="padding:10px;">
+                A new wallet!
+            </div>
+            <div class="" style="padding:10px;">
+                You have nothing in it yet.
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+
+</div>
+
+<!-- NEW TRANSACTION BOX -->
+<div class="newTx" ng-show="newTransaction">
+    {{newTransaction}} 
+</div>
+
+<!-- BACKGROUND DIM -->
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;border-radius:4px;box-shadow:0 0 1px 1px #000;background:rgba(0,0,0,0.4);" ng-show="enterPIN || txDetails" ng-click="enterPIN=false;txDetails=false;">
+</div>
+
+<!-- ENTER PIN MODAL -->
+<div style="position:fixed;top:15%;left:35%;width:30%;height:auto;border-radius:4px;box-shadow:0 0 1px 1px #000;background:rgba(150,230,130,0.8);padding:4px 4px;font-size:18px;font-weight:600;text-align:center;" ng-show="enterPIN">
+    <div class="msg" style="background-color:rgba(200,120,80,0.6);" ng-show="wrongPIN">
+        {{msgs.wrongPIN.translate()}}
+    </div>
+    <div class="msg" style="background-color:rgba(80,120,240,0.6);" ng-show="sendingTx">
+        {{msgs.sendingTx.translate()}}
+    </div>
+    <div style="height:4px;background-color:orange;width:{{progress}}%;margin-top:-4px;" ng-show="sendingTx"></div>
+    <div class="msg" style="background-color:rgba(120,240,80,0.6);" ng-show="txSuccess">
+        {{msgs.txSuccess.translate()}}
+    </div>
+    <div class="msg" style="background-color:rgba(240,120,80,0.6);" ng-show="txFail">
+        {{msgs.txFail.translate()}}
+    </div>
+    <div class="msg" style="background-color:rgba(250,120,30,0.6);" ng-show="invalidAmount">
+        {{msgs.invalidAmount.translate()}}
+    </div>
+    <div style="padding:5px;">
+        {{msgs.enterPIN.translate()}}
+    </div>
+    <input type="password" ng-model="walletPIN" style="width:100px;font-size:20px;letter-spacing:5px;text-align:center;"/>
+    <div style="padding:6px;border-radius:2px;border:1px solid #ccc;background-color:rgba(200,120,80,0.5);margin:5px 0;font-size:14px;">
+        You are sending {{sendAmount}} BTC to {{sendTo}}.
+    </div>
+    <button style="padding:4px 10px;margin:4px 10px;" class="btn btn-success" ng-click="send()">
+        {{msgs.sendPIN.translate()}}
+    </button>
+</div>
+
+<!-- TRANSACTION DETAILS MODAL -->
+<div style="position:fixed;top:20%;left:30%;width:40%;height:auto;border-radius:4px;box-shadow:0 0 1px 1px #000;background:rgba(230,230,230,0.9);padding:4px 4px;font-size:18px;font-weight:600;text-align:center;" ng-show="txDetails">
+    <div class="msg" style="background-color:rgba(120,240,80,0.6);" ng-show="txDetails.note">
+        {{txDetails.note.translate()}}
+    </div>
+    <div class="msg" style="background-color:rgba(240,120,80,0.6);" ng-show="!txDetails.confirmed">
+        {{msgs.confirmedTx.translate()}}
+    </div>
+    <div class="txDetailRow">
+        <div style="float:left:width:40%;">
+            {{msgs.transactionID.translate()}}
+        </div>
+        <div style="float:left:width:60%;font-size:11px;">
+            {{txDetails.hash}}
+        </div>
+    </div>
+    <div class="txDetailRow">
+        <div style="float:left:width:40%;">
+            {{msgs.transactedAmount.translate()}}
+        </div>
+        <div style="float:left:width:60%;">
+            {{txDetails.amount}}
+        </div>
+    </div>
+    <div class="txDetailRow">
+        <div style="float:left:width:40%;">
+            {{msgs.transactionTime.translate()}}
+        </div>
+        <div style="float:left:width:60%;">
+            {{txDetails.date}}
+        </div>
+    </div>
+    <div class="txDetailRow">
+    </div>
+    <div class="txDetailRow">
+    </div>
+</div>

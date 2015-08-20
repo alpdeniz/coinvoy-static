@@ -1,0 +1,55 @@
+<div class="row jumboAcc" style="">
+    <div class="col-sm-12">
+        Technology
+    </div>
+</div>
+<div class="row content">
+    <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+		<div>
+			<p>
+				This wallet is the consequence of an effort to create a fully secure and easy-to-use interface that needs no trust. 
+			</p>
+			<p>
+				<div>It features:</div>
+				<ul>
+					<li ng-repeat="f in features">
+						{{f}}
+					</li>
+				</ul>
+			</p>
+			<p>
+				As you notice, the site and documentation is still under construction. However, here are some specs:
+			</p>
+			<p>
+				<ul>
+					<li>
+					User login : 60K rounds of PBKDF2-HMAC-SHA512.
+					</li>
+					<li>
+					Secret hash: Hash of answers is encrypted with a derivative of password hash + PIN using 10K rounds of PBKDF2-HMAC-SHA512 + AES-256 and kept in DB.
+					</li>
+					<li>
+					Encrypted PIN: Encrypted with user information hash using 10K rounds of PBKDF2-HMAC-SHA512 + AES-256 and kept in DB.
+					</li>
+					Master Private Key: Generated with PIN + User information hash through 30K rounds of PBKDF2.
+					<li>
+					Wallet Addresses: Multi-signature key pairs generated through cross-matching children of the master node. Receiving addreses are generated and managed in the server by using the master public key.
+					</li>
+				</ul>
+			</p>
+		</div>
+		<div>
+			<p>
+				All operations takes place in client-side JS and all password derivation is completed with user's unique salt.<br>
+			</p>
+			<p>
+				This scheme makes password and PIN recovery possible by providing high entropy for all encrypted data. 
+			</p>
+		</div>
+		<div>
+			<p style="margin-top:30px;font-weight:500;font-size:110%;">
+				Very special thanks to Vibernoff for AsmcryptoJS library and all BitcoinJS devs. 
+			</p>
+		</div>
+	</div>
+</div>

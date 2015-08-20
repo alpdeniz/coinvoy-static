@@ -1,0 +1,60 @@
+<style>
+    body {
+        background-color: rgba(233,233,233, 0.05);
+    }
+    .bodyDiv {
+        background-color: none;
+    }
+    .headerRow {
+        background-color: rgb(80,170,80);
+        color: white;
+    }
+</style>
+
+<div class="container" style="padding:30px;">
+    <!-- <div class="row" style="text-align:center;padding:5px;margin-bottom:15px;">
+        <b>{{msgs.notice.translate()}}</b>{{msgs.noticeText.translate()}}
+    </div> -->
+    <div class="row">
+    </div>
+    <div class="row questionRow" ng-repeat="question in questions">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <select ng-model="question.options[0]" ng-options="q for q in question.options" style="padding: 3px;margin-bottom: 8px;width:99%;"></select>
+                <div ng-if="question.selection == 'Other'">
+                    <input type="text" placeholder="Type your own question"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+                <b>{{question.label}}</b>
+            </div>
+            <div class="col-sm-2">
+                <input ng-model="question.value" type="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="text-align:center;padding:20px;">
+        <button class="btn btn-primary" style="padding:6px 10px;" ng-click="recoverPIN()">{{msgs.recoverBtn.translate()}}</button>
+    </div>
+    <div class="row" style="text-align:center;">
+        <div ng-show="walletPIN" style="color:#5a6;">
+            {{msgs.pinIsBack.translate()}}
+        </div>
+        <div ng-show="pinError" style="color:#b65;font-weight:bold;">
+            {{pinError.translate()}}
+        </div>
+    </div>
+    <div class="row" style="text-align:center;">
+        <div ng-show="walletPIN">
+            <div style="font-size:26px;letter-spacing:5px;"><b>{{walletPIN}}</b></div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;margin-bottom:20px;" ng-show="walletPIN">
+        <div class="col-sm-6 col-sm-offset-3" style="text-align:center;">
+            <b>{{msgs.importantNotice.translate()}}</b><br>{{msgs.importantNoticeText.translate()}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="container recoverFundsForm" style="padding:30px;">
+    <div class="row" style="text-align:center;padding:5px;margin-bottom:15px;">
+        <b>{{msgs.notice.translate()}}</b>{{msgs.noticeText.translate()}}
+    </div>
+    <div class="row" style="padding:10px;">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-3 col-sm-12 formLabel">
+                <b>Email</b>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <input ng-model="email" type="text" style="max-width:250px;" placeholder="Your email">
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="!keysGenerated">
+        <div class="row" style="padding:10px;">
+            <div class="row" ng-repeat="question in questions" style="margin-top:15px;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4 col-sm-12">
+                            <div style="padding:4px;">{{question.question}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-3 col-sm-12 formLabel">
+                            <b>{{question.label}}</b>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <input ng-model="question.value" type="text" style="max-width:250px;" placeholder="Your secret answer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding:10px;">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-3 col-sm-12 formLabel">
+                    <b>PIN</b>
+                </div>
+                <div class="col-md-3 col-md-offset-0 col-sm-6 col-sm-offset-3">
+                    <input ng-model="walletPIN" type="password" style="max-width:250px;font-size:130%;" placeholder="YOUR WALLET PIN">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="text-align:center;padding:20px;">
+            <button class="btn btn-primary" style="padding:6px 10px;" ng-click="generate()">Generate Wallet Keys</button>
+        </div>
+
+    </div>
+
+    <div class="row" style="padding:10px;">
+        <div class="row">
+            <div class="col-sm-2 col-md-offset-3 col-sm-12 formLabel">
+                <b>Salt</b>
+            </div>
+            <div class="col-sm-3 col-sm-12">
+                <input ng-model="salt" type="text" disabled="disabled" style="max-width:250px;" placeholder="Your salt">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-3 col-sm-12 formLabel">
+                <b>Balance</b>
+            </div>
+            <div class="col-sm-3 col-sm-12">
+                <input ng-model="balance" type="text" disabled="disabled" style="max-width:250px;" placeholder="Your balance">
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding:10px;margin-top:20px" ng-show="showKeys">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-3 col-sm-12 formLabel">
+                <b>Key Pairs</b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-3">
+                <b>Address</b>
+            </div>
+            <div class="col-sm-3">
+                <b>Keys</b>
+            </div>
+        </div>
+        <div ng-repeat="key in wallet.genAddresses" class="row" style="text-align:center;padding:10px;border-bottom:1px solid #999;">
+            <div class="col-sm-3 col-sm-offset-3">
+                {{key.address}}
+            </div>
+            <div class="col-sm-3">
+                {{wallet.keys[2*$index].toWIF()}} <br>
+                {{wallet.keys[2*$index+1].toWIF()}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding:10px;" ng-show="keysGenerated && !showKeys">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-3 col-sm-12 formLabel">
+                <b>Send To</b>
+            </div>
+            <div class="col-sm-3 col-sm-12">
+                <input ng-model="sendTo" type="text" style="max-width:250px;" placeholder="Transfer Address">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-offset-3 col-sm-12 formLabel">
+                <b>Amount</b>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <input ng-model="sendAmount" type="text" style="max-width:250px;" placeholder="Transfer Amount">
+            </div>
+        </div>
+        <div class="row" style="text-align:center;padding:20px;">
+            <button class="btn btn-primary" style="padding:6px 10px;" ng-click="send()">Transfer Funds</button>
+        </div>
+    </div>
+    <div class="row" style="text-align:center;">
+        <div ng-show="sent" style="color:#5a6;">
+            Funds are successfully transferred.
+        </div>
+        <div ng-show="sendError" style="color:#b65;font-weight:bold;">
+            {{error}}
+        </div>
+    </div>
+</div>

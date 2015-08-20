@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html ng-app="coinvoy">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coinvoy secure bitcoin wallet">
+    <meta name="author" content="ilkeryasin">
+    <link rel="shortcut icon" href="/static/img/favicons/64.ico?v=0.02">
+
+    <meta name="keywords" content="coinvoy, secure, bitcoin, wallet, web wallet" />
+    <meta property="og:title" content="Coinvoy" />
+    <meta property="og:description" content="Coinvoy secure bitcoin wallet" />
+    <meta property="og:image" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:title" content="Coinvoy" />
+    <meta name="twitter:description" content="Coinvoy secure bitcoin wallet" />
+    <meta name="twitter:image" content="" />
+    <!-- Mobile browser tab color -->
+    <meta name="theme-color" content="#42c5be" />
+    
+
+    <title> Coinvoy Bitcoin Wallet - The best, most secure wallet</title>
+    
+  <!-- <link href='//fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css'> -->
+ <!--  <link href='https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,700,800,500,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
+  <link href='https://fonts.googleapis.com/css?family=Raleway:500,800,700,400,300,200' rel='stylesheet' type='text/css'>
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+  <link href="/static/css/style.css" rel="stylesheet" media="screen">
+
+<!--   <link href="/static/css/ng-scrollbar.css" rel="stylesheet" media="screen">
+ -->  <!-- <link href="/static/css/wallet.min.css" rel="stylesheet" media="screen"> -->
+<link href="/static/img/favicons/64.ico" rel="apple-touch-icon" />
+<link href="/static/img/favicons/76.ico" rel="apple-touch-icon" sizes="76x76" />
+<link href="/static/img/favicons/120.ico" rel="apple-touch-icon" sizes="120x120" />
+<link href="/static/img/favicons/152.ico" rel="apple-touch-icon" sizes="152x152" />
+<link href="/static/img/favicons/180.ico" rel="apple-touch-icon" sizes="180x180" />
+<link href="/static/img/favicons/192.ico" rel="icon" sizes="192x192" />
+<link href="/static/img/favicons/128.ico" rel="icon" sizes="128x128" />
+
+</head>
+<body ng-controller="MainController" ng-cloak flow-prevent-drop style="">
+    <div ng-show="working()" class="workingIndicator" style="">
+        <div>
+            <span>
+                <img src="/static/img/loading.gif" style="height:24px;margin-top:-4px;" />
+            </span>
+            <span style="margin-left:4px;">
+                {{working()}}
+            </span>
+        </div>
+    </div>
+    
+    <div class="bodyDiv" style="overflow-x:hidden;">
+        <div class="row headerRow">
+            <div class="col-sm-5 col-xs-12">
+                <div ng-click="toPage('')">
+                    <div style="float:left">
+                        <img src="/static/img/logo.png" style="height:52px;" alt="coinvoy"/>
+                    </div>
+                    <div class="banner">
+                        {{::msg.banner}}
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-sm-4 col-sm-offset-1">
+                <div class="menuitem" ng-repeat="i in ::menuitems" ng-class="{'activemenuitem': i.name == 'HOME'}">
+                    {{::i.name}}
+                </div>
+            </div> -->
+            <div class="col-sm-7 col-xs-12">
+                <div class="topNav" ng-if="!user">
+                    <div ng-click="toPage('about')" ng-class="{'active': page == 'about'}">
+                        {{::msg.about}}
+                    </div>
+                    <div ng-click="openLoginBox()">
+                        {{::msg.login}}
+                    </div>
+                    <div>
+                        <a href="/merchants">
+                            {{::msg.merchants}}
+                        </a>
+                    </div>
+                    <div ng-click="toPage('')" ng-class="{'active': page == 'home'}">
+                        {{::msg.home}}
+                    </div>
+                    <div class="selectLanguage">
+                        <span ng-click="changeLanguage('EN')" class="language" ng-class="{'selectedLanguage': language == 'EN'}">
+                            EN
+                        </span>
+                        <span ng-click="changeLanguage('TR')" class="language" ng-class="{'selectedLanguage': language == 'TR'}">
+                            TR
+                        </span>
+                    </div>
+                </div>
+                <div ng-if="user">
+                    <div class="topNav">
+                        <div ng-click="logout()">
+                            {{::msg.logout}}
+                        </div>
+                        <div ng-click="toPage('account')" ng-class="{'active': page == 'account'}">
+                            {{::msg.account}}
+                        </div>
+                        <div ng-click="toPage('wallet')" ng-class="{'active': page == 'wallet'}">
+                            {{::msg.wallet}}
+                        </div>
+                        <div ng-click="toPage('')" ng-class="{'active': page == 'home'}">
+                            {{::msg.home}}
+                        </div>
+                       <!--  <div class="walletBtn" ng-click="toPage('wallet')">{{::msg.wallet}}</div>
+                        <div class="accountBtn" ng-click="toPage('account')">{{::msg.account}}</div> -->
+                        <!-- <div class="username">{{user.email}}</div> -->
+                    </div>
+                    <div style="float:right;margin-left:10px;text-align:center;font-size:11px;padding:3px;">
+                        <div style="margin:8px;" class="selectLanguage">
+                            <span ng-click="changeLanguage('EN')" class="language" ng-class="{'selectedLanguage': language == 'EN'}">
+                                EN
+                            </span>
+                            <span ng-click="changeLanguage('TR')" class="language" ng-class="{'selectedLanguage': language == 'TR'}">
+                                TR
+                            </span>
+                        </div>
+                        <!-- <div class="logoutBtn" ng-click="logout()">
+                            {{::msg.logout}}
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-view></div>
+    </div>
+    
+    <div class="footer" style="width:100%;">
+        <div class="footerCol">
+            <!-- <a href="#"> -->
+            <a href="/#/" style="font-weight:bold;">COINVOY</a><br>
+            <!-- </a><br> -->
+            <a href="/#about">About</a><br>
+        </div>
+        <div class="footerCol">
+            <a href="/the-wallet#home" style="font-weight:bold;">WALLET</a><br>
+            <a href="the-wallet#intro">Intro</a><br>
+            <a href="the-wallet#tech">Technology</a><br>
+            <a href="the-wallet#faq">FAQ</a>
+        </div>
+        <!--  <div class="footerCol">
+            <a href="payments" style="font-weight:bold;">PAYMENTS</a><br>
+            <a href="payments#intro">Intro</a><br>
+            <a href="payments#guide">Guide</a><br>
+            <a href="payments#faq">Faq</a>
+        </div> -->
+        <div class="footerMark">2015&copy; <span>COINVOY</span></div>
+    </div>
+
+    <div class="dim" ng-show="loginBox" ng-click="loginBox=false">
+    </div>
+    <div class="login modal" ng-show="loginBox">
+        <div class="row">
+            <div class="col-sm-12">
+                <form id="login" autocomplete="on">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4 style="margin-top:-4px;">{{::msg.login}}</h4>
+                        </div>
+                    </div>
+                    <div class="row modalMsg" ng-class="loginV.success? 'success':'error'" ng-show="loginV.msg">
+                        {{loginV.msg}}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            E-mail
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="loginMail" class="" type="text" placeholder="{{::msg.mailPlaceholder}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{::msg.password}}
+                        </div>
+                        <div class="col-sm-8">
+                            <input ng-model="loginPass" class="" type="password" placeholder="{{::msg.passPlaceholder}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="font-size:12px;padding:4px;cursor:pointer;" ng-click="forgotPassword()">
+                                Forgot password?
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            
+                        </div>
+                    </div>
+                    <div class="row" style="text-align:center;padding:3px;">
+                        <button class="btn btn-success" ng-click="login()" style="padding:4px 15px;">{{::msg.login}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+    
+<!-- <script type="text/javascript" src="/static/js/init.min.js"></script>
+ -->
+
+    <!-- Angular and modules -->
+    <script type="text/javascript" src="/static/js/modules/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/modules/angular-route.min.js"></script>
+<!--     <script type="text/javascript" src="/static/js/modules/angular-mb-scrollbar.js"></script>
+ -->    <script type="text/javascript" src="/static/js/modules/angular-load.min.js"></script>
+    <script type="text/javascript" src="/static/js/modules/angular-upload.min.js"></script>
+    <!-- <script type="text/javascript" src="/static/js/modules/angular-animate.min.js"></script> -->
+    <script type="text/javascript" src="/static/js/modules/angular-websocket.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
+  <script src="/static/js/modules/ng-clip.min.js"></script>
+
+    <!-- Wallet and cryptos -->
+    <script async="async" type="text/javascript" src="/static/js/controllers/wallet.js"></script>
+    <script async="async" type="text/javascript" src="/static/js/crypto/asmcrypto.min.js"></script>
+    <script async="async" type="text/javascript" src="/static/js/crypto/bip39.min.js"></script>
+    <!-- Languages -->
+    <script type="text/javascript" src="/static/js/language/init.js"></script>
+    <!-- <script type="text/javascript" src="/static/js/language/tr-TR.js"></script> -->
+    <script type="text/javascript" src="/static/js/controllers/init.js"></script>
+    <!-- Landing -->
+    <script type="text/javascript" src="/static/js/controllers/LandingController.js"></script>
+    <!-- app modules -->
+    <script type="text/javascript" src="/static/js/controllers/app/auth.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/app/appAPI.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/app/txSocket.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/app/txFeed.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/app/router.js"></script>
+    <!-- view controllers -->
+    <script type="text/javascript" src="/static/js/controllers/WalletController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/NewWalletController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/AccountController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/PanelController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/AboutController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/ForgetPasswordController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/RecoverPINController.js"></script>
+    <!-- <script type="text/javascript" src="/static/js/controllers/RecoverFundsController.js"></script> -->
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-45959899-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</body>
+</html>

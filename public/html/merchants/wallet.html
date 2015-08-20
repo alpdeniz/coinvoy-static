@@ -1,0 +1,309 @@
+<!-- <div class="">
+    <div class="row" style="background-color:rgba(86,143,160,1);min-height:30px;"> -->
+       <!--  <div class="col-sm-2 col-xs-0"></div>
+        <div ng-repeat="page in pages" ng-click="switchPage(page.name)" class="col-sm-2 col-xs-3 pageTab" ng-class="{'active':current_page==page.name}">
+            <img src="{{page.img}}" style="height:100%;">
+            <div style="text-align:center;">{{page.name}}</div>
+        </div> -->
+<!--     </div>
+</div> -->
+<style>
+    body {
+        background-color: rgba(233,233,233, 0.05);
+    }
+    .bodyDiv {
+        background-color: none;
+    }
+    .headerRow {
+        background-color: rgb(80,170,80);
+        color: white;
+    }
+</style>
+
+<div class="content" ng-if="$parent.pageReset">
+        
+        <div style="float:left;width:100%;">
+            <div class="sideCol" ng-if="ui.feed.length>0 && false">
+                <div>
+                    <div id="chartContainer" style="height:250px;width:100%;margin-left:-10%;"></div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12" style="float:right;">
+                <!-- <div class="toolBox">
+                    <div style="float:left;width:47%;">
+                        <div class="toolBoxItem" ng-click="openHistory();">
+                        HISTORY
+                        </div>
+                    </div>
+                    <div style="float:left;width:47%;">
+                        <div class="toolBoxItem" ng-click="toPage('account')">
+                        ACCOUNT
+                        </div>
+                    </div>
+                </div> -->
+                <div class="contacts">
+                    <h3>Contacts</h3>
+                    <div ng-if="contactsExist">
+                        <div ng-repeat="ct in contacts" style="float:left;margin:6px;" ng-if="ct.id != user.id">
+                            <div class="contact" ng-click="openSend(ct)">
+                                <img ng-src="{{::(ct.avatar || defaultAvatar)}}" class="avatar" style="width:45px;height:45px;margin:3px;"/>
+                            </div>
+                            <div style="font-size:80%;">
+                                {{::(ct.name || ct.email.slice(0,8)+'..')}}
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!contactsExist" style="margin-top:10px;padding:10px;font-size:120%;text-align:center;">
+                        <br>
+                        You don't have any contacts yet.
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-sm-4 col-xs-12" style="float:right;line-height:1.1;">
+                <div class="profile">
+                    <div ng-if="user.avatar">
+                        <img class="avatar" ng-src="{{user.avatar}}"/>
+                    </div>
+                    <div ng-if="user.username">{{user.username}}</div>
+                    <div class="fullName" ng-if="user.name">{{user.name}} {{::user.sirname}}</div>
+                    <div style="font-size:90%;" ng-if="user.email">{{::user.email}}</div>
+                    <div style="font-size:80%;" ng-if="user.phone">{{::user.phone}}</div>
+                    <div class="balanceBox">{{ui.balance}} BTC</div>
+                    <div class="toolBox" style="margin-top:25px;margin-bottom:40px;float:left;width:100%;">
+                        <div ng-click="openSend()">
+                         SEND
+                        </div>
+                        <div>
+                            <div ng-show="!newAddress" ng-click="openReceive()">
+                                DEPOSIT
+                            </div>
+                            <div ng-if="newAddress == true">
+                                Getting new address...
+                            </div>
+                            <div class="newAddress" ng-if="newAddress && newAddress != true">
+                                {{::newAddress}}
+                            </div>
+                            <div class="addressMenu" ng-if="newAddress && newAddress != true">
+                                <div ng-click="showQR()">Show QR</div>
+                                <div clip-copy="newAddress">Copy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12" style="float:right;margin-bottom:40px;">
+                <h3 style="text-align:center;margin-top:40px;">Coin Feed</h3>
+                <div ng-if="ui.feed.length == 0" style="margin-top:10px;padding:10px;font-size:120%;text-align:center;">
+                    <br>
+                    You don't have any transactions yet.
+                </div>
+                <div class='feed' ng-if="ui.feed.length > 0">
+                    <div class="txContainer" ng-repeat="tx in ui.feed" ng-click="showTransaction(tx)" ng-class="{'txHover': tx.hover}" ng-if="!tx.change">
+                        <div class="txHead" ng-class="tx.sent? 'tx-out': 'tx-in'">
+                            <div style="width:10%;margin-left:1%;float:left;">
+                                <img ng-src="{{::tx.from.avatar}}" class="avatar" style="width:100%;height:auto;"/>
+                            </div>
+                            <div style="width:75%;float:left;">
+                                {{::tx.text}}
+                            </div>
+                            <div style="width:10%;margin-left:1%;float:left;">
+                                <img ng-src="{{::tx.to.avatar}}" class="avatar" style="width:100%;height:auto;"/>
+                            </div>
+                        </div>
+                        <div class="tx" ng-if="::tx.message">
+                            {{::tx.message}}
+                        </div>
+                        <div class="txNote">
+                            {{::tx.note}}
+                        </div>
+                    </div>
+                     <div ng-if="ui.feed.length==0" style="min-height:200px;text-align:center;font-size:120%;">
+                        <br><br>
+                        <div class="" style="padding:5px;">
+                            A new wallet!
+                        </div>
+                        <div class="" style="padding:5px;">
+                            You have no transaction yet.
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+       
+    <div style="clear: both;height:10px;"></div>
+</div>
+
+<!-- NEW TRANSACTION BOX -->
+<div class="newTx" ng-show="newTransaction.length > 0">
+    <div ng-repeat="txmsg in newTransaction">
+        {{txmsg}} 
+    </div>
+</div>
+
+<!-- BACKGROUND DIM -->
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;border-radius:4px;box-shadow:0 0 1px 1px #000;background:rgba(0,0,0,0.5);" ng-show="showDim()" ng-click="closeModals()">
+</div>
+
+
+<!-- QR BOX -->
+<div class="qr modal" ng-show="modals['qr'] && newAddress && newAddress != true">
+    <div id="qrcode">
+    </div>
+    <div style="font-weight:600;font-size:140%;margin-top:10px;">
+        {{newAddress}}
+    </div>
+</div>
+
+<!-- RECEIVE MODAL -->
+<div class='receive modal' ng-if="modals['receive']">
+    <div ng-show="modals['receive'] != true">
+        {{modals['receive']}}
+    </div>
+    <div ng-show="modals['receive'] == true">
+        Getting new address
+    </div>
+</div>
+
+<!-- COLLECTIVE MODAL -->
+<div class='collective modal' ng-if="modals['collective']">
+    <h3>
+        START A COLLECTIVE
+    </h3>
+    <div style="padding:5px 0 15px 0; font-size:80%;">
+        To begin collecting bitcoins for a campaign or a common event
+    </div>
+    <div>
+        <div>
+            What is the headline?
+        </div>
+        <div>
+            <textarea cols="40" rows="3" ng-model="collective.subject" type="text" class="sendFormRow" placeholder="Write your message to the receiver" ng-class="{'error' : invalid['sendMessage']}" style="height:90px;"></textarea>
+        </div>
+        <div>
+            Description
+        </div>
+        <div>
+            <textarea cols="40" rows="3" ng-model="collective.message" type="text" class="sendFormRow" placeholder="Write your message to the receiver" ng-class="{'error' : invalid['sendMessage']}" style="height:90px;"></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- SEND MODAL -->
+<div class='send modal' ng-if="modals['send']">
+    <div class='sendFormPart' ng-show="send.step==1">
+        <input type="text" ng-change="send.typing()" class="sendFormRow" ng-model="send.toUser.email" style="width:100%;" ng-click="send.typeResult=false" ng-keydown="send.selectTypeResult($event)" placeholder="{{::msg.sendToPlaceholder.translate()}}" ng-class="{'error' : invalid['sendToAddress']}"/>
+        <div class="typeahead" ng-show="send.typeResult">
+            <div ng-repeat="res in send.typeResult" class="typeItem" ng-class="{'typeItemFocus' : res.selected}" ng-click="send.selectEmail(res)">
+                <div style="float:left;margin-right:15px;">
+                    <img ng-src="{{res.avatar}}" ng-if="res.avatar" class="avatar" style="width:28px;height:28px;margin-bottom:0;"/>
+                </div>
+                <div style="float:left;line-height:29px">
+                    {{res.name? res.name : res.email}}
+                </div>
+            </div>
+        </div>
+        <input id="send.amount" ng-model="send.amount" type="text" class="sendFormRow" placeholder="Amount to send" ng-class="{'error' : invalid['sendAmount']}">
+        
+        <div style="text-align:center;margin-top:5px;">
+            <button class="btn btn-primary" style="padding:4px 30px;" ng-click="send.check()">Next</button>
+        </div>
+    </div>
+    <div class='sendFormPart' ng-show="send.step==2">
+        <div>
+            Would you like to convey a message along?
+        </div>
+        <textarea cols="40" rows="3" id="sendMessage" ng-model="send.message" type="text" class="sendFormRow" placeholder="Write your message to the receiver" ng-class="{'error' : invalid['sendMessage']}" style="height:90px;"></textarea>
+        <div style="text-align:center;margin-top:5px;">
+            <button class="btn btn-warning" style="padding:4px 30px;" ng-click="send.step=1;">Go Back</button>
+            <button class="btn btn-primary" style="padding:4px 30px;" ng-click="send.presend()">Send</button>
+        </div>
+    </div>
+
+    <div class='sendFormPart' ng-show="send.step==3">
+        <div ng-if="!send.success">
+            <div>
+                Check your gears before sending bitcoins. Are you sure? 
+            </div>
+            <input id="pin" ng-model="send.walletPIN" type="password" class="sendFormRow" placeholder="Wallet PIN" ng-class="{'error' : invalid['pin']}">
+        </div>
+        <div ng-if="send.success" style="font-weight:600;font-size:18px;color:green;">
+            Successfully sent
+        </div>
+        <div style="height:3px;background:green;width:{{send.progress}}%;"></div>
+        <div style="text-align:center;margin-top:5px;">
+            <button class="btn btn-warning" style="padding:4px 30px;" ng-click="send.step=2;">Go Back</button>
+            <button class="btn btn-success" style="padding:4px 30px;" ng-click="send.send()">Approve</button>
+        </div>
+    </div>
+    <div ng-show="send.error" style="margin: 3px;">{{send.error}}</div>
+</div>
+
+<!-- TRANSACTION DETAILS MODAL -->
+<div class="txDetails" ng-if="modals['transaction']">
+    <div class="head" ng-show="::txDetails.label">
+        <div style="float:left;">{{::txDetails.label}}</div>
+        <div style="float:right;">{{::txDetails.date}}</div>
+    </div>
+    <div class="msg" style="background-color:rgba(240,120,80,0.6);" ng-show="::txDetails.confirmed">
+        {{::msg.tx.confirmed}}
+    </div>
+    <div class="txDetailRow">
+        <div style="float:left;width:35%;">
+            {{::msg.tx.id}}
+        </div>
+        <div style="float:left;width:65%;font-weight:400;">
+            <div class="displayText" ng-show="!showTxid" ng-click="showTxid=true">
+                Display
+            </div>
+            <a href="https://blockchain.info/tx/{{::txDetails.txid}}" target="_blank" class="txHash" ng-show="showTxid">
+                {{::txDetails.txid}}
+            </a>
+        </div>
+    </div>
+    <div class="txDetailRow">
+        <div style="float:left;width:35%;">
+            {{::msg.tx.amount}}
+        </div>
+        <div style="float:left;width:65%;font-weight:400;">
+            {{::txDetails.amount}} BTC
+        </div>
+    </div>
+    <div ng-if="txDetails.sender" class="txDetailRow">
+        <div style="float:left;width:35%;">
+            Sender
+        </div>
+        <div style="float:left;width:65%;font-weight:400;">
+            {{::txDetails.sender}}
+        </div>
+    </div>
+    <div ng-if="txDetails.receiver" class="txDetailRow">
+        <div style="float:left;width:35%;">
+            Receiver
+        </div>
+        <div style="float:left;width:65%;font-weight:400;">
+            {{::txDetails.receiver}}
+        </div>
+    </div>
+    <div class="txDetailRow">
+        <div style="float:left;width:35%;">
+            Text Attached
+        </div>
+        <div style="float:left;width:65%;font-weight:400;">
+            <div class="displayText" ng-show="!showMsg" ng-click="showMsg=true">
+                Display
+            </div>
+            <div ng-show="showMsg" ng-click="showMsg=false">
+                {{::txDetails.message}}
+            </div>
+        </div>
+    </div>
+    <!-- <div class="txDetailRow">
+        <div style="float:left;width:40%;">
+            {{::msg.tx.fee}}
+        </div>
+        <div style="float:left;width:60%;font-weight:400;">
+            {{::txDetails.fee}}
+        </div>
+    </div> -->
+</div>

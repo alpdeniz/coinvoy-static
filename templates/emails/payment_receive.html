@@ -1,0 +1,18 @@
+<p style="font-size:14px;">Dear Coinvoy user</p>
+<p>
+    <div>You have just received ${data['amount']} BTC from ${data['sender']} as a payment for product:</div>
+    <div>
+    ${data['product']}
+    </div>
+    % if data['message']:
+    <p>
+        There is also a message attached to it:
+    </p>
+    <p>
+        ${data['message']}
+    </p>
+    % endif
+</p>
+<p>
+    Have a lovely day!
+</p>

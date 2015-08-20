@@ -1,0 +1,715 @@
+<div class="container pageWidth">
+  <!-- <div id="docs" class="row" style="margin-top:20px;">
+    <div class="col-sm-12">
+      <h1 class="section">Documentation</h1>
+    </div>
+  </div> -->
+  <div id="overview" class="row">
+    <div class="col-sm-12">
+      <h2 class="section">Overview</h2><br>
+      <b style="font-size:130%;">Welcome to Coinvoy API. </b><br>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        Coinvoy API makes it possible to accept payments and/or donations, establish escrows and create invoices in bitcoin.<br><br>
+
+        Coinvoy API is simply designed to serve developers' and merchants' online payment needs, making it much easier to create a shop - even a marketplace with integrated escrow service.<br><br>
+
+        We are now in our BETA stage and this means that we are ever more glad to receive your feedback. Feel free to contact us at <b>support@coinvoy.net</b><br><br>
+        See <a href="#apicalls">complete API Documentation</a> for further information.<br>
+        See <a href="#libs">client libraries</a> in order to use API comfortably.<br>
+        Check out <a href="#examples">examples</a> to see how easy it actually is.
+
+      </p>
+    </div>
+  </div>
+
+  <div id="button" class="row">
+    <div class="col-sm-12">
+      <h2 class="section">Button API</h2><br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+    Coinvoy's full potential is inherent in its <b>button</b> feature, a great -very easy to use- integration that empowers secure payments in browsers through javascript.
+      <br><br>
+      <h4><b>Payment buttons</b></h4> Through a <a href="#getButton">getButton</a> request or using our client library:
+      <pre class="libcode">
+      <code  class="language-php">
+//example in PHP
+require_once('./coinvoy.php');
+
+$cv = new Coinvoy();
+
+/* mandatory parameters */
+$amount = 0.1;
+$currency = "BTC";
+// $amount = 13;
+// $currency = "USD";
+$address = "19tsNebvakhmiYnNtYYPamTVRJW1fkEyXf"; // your receiving address
+
+/* optional parameters */
+$options = array(
+'orderID' => 'item_101',
+'secret'  => 'random string for each request',
+'callback' => 'https://yoursite.com/ipn', // your ipn url
+'description' => 'best product in known universe'
+);
+
+$button = $cv->button($amount, $currency, $address, $options);
+
+echo $button->html; // displays button in iframe</code></pre>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      Payment buttons make it possible to securely manage payments in client-side through locking the invoice information including the requested amount and currency, so that a   payment can be created after user selects the desired currency to pay.
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h4><b>Donation buttons</b></h4> Through a <a href="#getDonation">getDonation</a> request or using our client library:
+      <pre class="libcode">
+      <code  class="language-php">
+//example in PHP
+require_once('./coinvoy.php');
+
+$cv = new Coinvoy();
+
+/* mandatory parameters */
+$address = "19tsNebvakhmiYnNtYYPamTVRJW1fkEyXf"; // your donation receiving address
+
+/* optional parameters */
+$options = array(
+'secret'      => 'random string for each request',
+'callback'    => 'https://yoursite.com/ipn', // your ipn url
+'description' => 'Thank you for donating!',
+'company'     => 'Wikipedia'
+);
+
+$button = $cv->donation($address, $options);
+
+echo $button->html; // displays button in
+          <iframe src="" frameborder="0"></iframe></code></pre>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      Donation buttons are for accepting varying amounts of desired currency. It lets your supporters donate in their currency of choice, while you receive the currency of your own choice. Donations are automatically invoiced for future reference.
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <a onclick="window.history.back();">Go Back</a>
+    </div>
+  </div>
+
+  <div id="libs" class="row">
+    <div class="col-sm-12">
+      <h2 class="section">Libraries</h2><br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      Coinvoy offers client libraries for its API. To use Coinvoy for your payments and donations, we recommend that you use our client libraries and start using Coinvoy in matter of seconds. Here are our initial collection:<br>
+      <a href="https://github.com/coinvoy/php-client" target="_blank">PHP client library in GitHub</a><br>
+      <a href="https://github.com/coinvoy/python-client" target="_blank">Python client library in GitHub</a><br>
+      <a href="https://github.com/coinvoy/nodejs-client" target="_blank">NodeJS client library in GitHub</a><br>
+      <a href="https://github.com/coinvoy/js-helper" target="_blank">JS helper library in GitHub</a><br>
+      <br><br>
+      Whereas client libraries have the complete potential of Coinvoy API, JS helper library is a tiny reminder of what you can create on client side for your payments. <br>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <a onclick="window.history.back();">Go Back</a>
+    </div>
+  </div>
+  <div id="apicalls" class="row">
+    <div class="col-sm-12">
+      <h2 class="section">Coinvoy API</h2><br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      Coinvoy is an online payment gateway for bitcoin. It handles everything related to them, including validation, exchange and invoice services, so that you can focus on your ideas rather than technical details about how bitcoin work.
+      <br>
+      Coinvoy API provides various tools to enable you create the most wonderful applications. It is created for developers in order to make it very easy and give greater freedom. With Coinvoy, you can even create transactions in client side!<br>
+      <br>
+
+    </div>
+  </div>
+  
+  <div id="apilist" class="row">
+    <div class="col-sm-8">
+      <h3><b>API Calls</b></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-10">
+      <p style="font-size:15px;">Here is the complete documentation to Coinvoy's functions where it is possible to:<br>
+        <a href="#apipayment">Create a payment or an escrow with an invoice</a><br>
+        <a href="#apibutton">Create a secure button for payment</a><br>
+        <a href="#apidonation">Create a donation button</a><br>
+        <a href="#paymentButtonView">Create &amp; display a payment from a given hash</a><br>
+        <a href="#apifreeEscrow">Release an escrow</a><br>
+        <a href="#apicancelEscrow">Cancel an escrow</a><br>
+        <a href="#apistatus">Get status of a payment</a><br>
+        <a href="#apiinvoice">Get invoice information</a><br>
+        All parameters should be provided as a JSON object in post body except button view.
+      </p>
+    </div>
+  </div>
+  <div id="apipayment" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Create a Payment : POST /api/payment
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - amount        # Price value<br>
+          - currency      # Price currency, BTC or fiat currencies<br>
+          - address       # (optional for escrow payments) Receiving address<br>
+          - returnAddress # (optional) Receiving address when escrow cancelled (can be provided later)<br>
+          - orderID       # (optional) Unique Order ID<br>
+          - secret        # (optional) Used to validate notification  (do not disclose)<br>
+          - callback      # (optional) URL for payment notifications<br>
+          - company       # (optional) Company name - will be displayed on payment page<br>
+          - motto         # (optional) Motto - will be displayed on payment page<br>
+          - companyLogo   # (optional) URL of your logo - will be displayed on payment page<br>
+          - addressLine1  # (optional) First line of the address of your organization<br>
+          - addressLine2  # (optional) Second line of the address of your organization<br>
+          - email         # (optional) Email for payment notifications<br>
+          - item          # (optional) Name of the item - will be displayed on payment page<br>
+          - description   # (optional) Description - will be displayed on payment page<br>
+          - minconf       # (optional )Minimum confirmations defaults to 1<br>
+          - escrow        # (optinal) True or false (default false)<br>
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+            "key"     : "CFF7JOFGS4SKA2CPXZWLRFJEAC===",<br>
+            "url"     : "https://coinvoy.net/payment/rY6WG5x547",<br>
+            "id"      : "rY6WG5x547",<br>
+            "address" : "payToAddress",<br>
+            "payAmount": "0.005",<br>
+            "html"    : "&lt;iframe id='ZjrnGXQY6v' src='https://coinvoy.net/payment/rY6WG5x547'&gt;&lt;/iframe&gt;",<br>
+            "success" : true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Key is only required in case of an <b>escrow</b><br>
+            # Payment iframe url to display in shop's website<br>
+            # Invoice id<br>
+            # Address for user to pay to<br>
+            # Amount of BTC to be paid<br>
+            # Generic iframe html to display
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="apibutton" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Create a payment button: POST /api/button
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - amount        # Price value<br>
+          - currency      # Price currency, BTC or fiat currencies<br>
+          - address       # (optional for escrow payments) Receiving address<br>
+          - returnAddress # (optional) Receiving address when escrow cancelled (can be provided later)<br>
+          - orderID       # (optional) Unique Order ID<br>
+          - secret        # (optional) Used to validate notification  (do not disclose)<br>
+          - callback      # (optional) URL for payment notifications<br>
+          - buttonText    # (optional) Text to be displayed on button<br>
+          - company       # (optional) Company name - will be displayed on payment page<br>
+          - motto         # (optional) Motto - will be displayed on payment page<br>
+          - companyLogo   # (optional) URL of your logo - will be displayed on payment page<br>
+          - addressLine1  # (optional) First line of the address of your organization<br>
+          - addressLine2  # (optional) Second line of the address of your organization<br>
+          - email         # (optional) Email for payment notifications<br>
+          - item          # (optional) Name of the item - will be displayed on payment page<br>
+          - description   # (optional) Description - will be displayed on payment page<br>
+          - minconf       # (optional )Minimum confirmations defaults to 1<br>
+          - escrow        # (optinal) True or false (default false)<br>
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px">
+            "hash": "52c3ac152150fae843be23ddf7834a51a",<br>
+            "html": "&lt;div&gt;&lt;button&gt;...&lt;/button&gt;&lt;/div&gt;",<br>
+            "success": true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Hash, request a new invoice using it<br>
+            # Button html to inject into the website<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="apidonation" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Create a donation button: POST /api/donation
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - address       # (optional for escrow payments) Receiving address<br>
+          - orderID       # (optional) Unique Order ID<br>
+          - secret        # (optional) Used to validate notification  (do not disclose)<br>
+          - callback      # (optional) URL for payment notifications<br>
+          - buttonText    # (optional) Text to be displayed on button<br>
+          - company       # (optional) Company name - will be displayed on payment page<br>
+          - motto         # (optional) Motto - will be displayed on payment page<br>
+          - companyLogo   # (optional) URL of your logo - will be displayed on payment page<br>
+          - addressLine1  # (optional) First line of the address of your organization<br>
+          - addressLine2  # (optional) Second line of the address of your organization<br>
+          - email         # (optional) Email for payment notifications<br>
+          - item          # (optional) Name of the item - will be displayed on payment page<br>
+          - description   # (optional) Description - will be displayed on payment page<br>
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+            "hash"    : "52c3ac152150fae843be23ddf7834a31e",<br>
+            "html"    : "&lt;div&gt;&lt;button&gt;...&lt;/button&gt;&lt;/div&gt;",<br>
+            "success" : true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Hash, request a new invoice using it<br>
+            # Button html to inject into the website<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="paymentButtonView" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Create a payment from button hash: GET /button/&lt;hash&gt;
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - hash       # The hash given off a button<br>
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+          <br>
+            Renders Payment page in iframe
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+          <br>
+            # For client-side management<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="apifreeEscrow" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Unleash an escrow: POST /api/freeEscrow
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - key     # The key given while creating an escrow<br>
+          - address # (optional) Receiving address (this will override the old receiving address if provided)
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+            "invoiceID" : "z5Xo9lUp"<br>
+            "amount"    : "0.59"<br>
+            "currency"  : "BTC"<br>
+            "success"   : true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Invoice ID of released escrow<br>
+            # Escrowed amount<br>
+            # Escrowed currency
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="apicancelEscrow" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Cancel an escrow: POST /api/cancelEscrow
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - key           # The key given while creating an escrow<br>
+          - returnAddress # (optional) Receiving address (this will override the old return address if provided)
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+            "invoiceID" : "z5Xo9lUp"<br>
+            "amount"    : "0.59"<br>
+            "currency"  : "BTC"<br>
+            "success"   : true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Invoice ID of cancelled escrow<br>
+            # Escrowed amount<br>
+            # Escrowed currency
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="apistatus" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Get status of an invoice: POST /api/status
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - invoiceID   # Invoice ID<br>
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+            "status"    : "confirmed"<br>
+            "paid"      : false<br>
+            "left"      : false<br>
+            "success"   : true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Current status of the requested invoice. [new,approved,confirmed,completed,cancelled,insufficient]<br>
+            # Already paid amount if insufficient<br>
+            # Due amount if insufficient
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="apiinvoice" class="row docwrap">
+    <div class="container">
+      <div class="row dochead">
+        <div class="col-sm-12">
+          Get an invoice: POST /api/invoice
+        </div>
+      </div>
+      <div class="row doc">
+        <div class="col-sm-12">
+          Parameters<br>
+          - invoiceID   # Invoice ID<br>
+        </div>
+      </div>
+      <div class="row docfoot">
+        <div style="padding:6px;">RESPONSE </div>
+        <div class="col-sm-7">
+          <div style="padding:5px;">
+            "id"           : "1Iz5Xo9lUp"<br>
+            "orderID"      : "interesting_item_102"<br>
+            "address"      : "payToAddress"<br>
+            "amount"       : "0.55"<br>
+            "currency"     : "BTC"<br>
+            "payAmount"    : "40"<br>
+            "company"      : "ACME"<br>
+            "motto"        : "A company that makes everything"<br>
+            "companyLogo"  : "http://logo.com/acme"<br>
+            "addressLine1" : "Wild Wild West"<br>
+            "addressLine2" : "USA"<br>
+            "item"         : "Coyote Killer"<br>
+            "description"  : "Use with caution"<br>
+            "escrow"       : false<br>
+            "success"      : true
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div style="padding:5px;">
+            # Invoice ID<br>
+            # Order ID of the payment<br>
+            # Payment address<br>
+            # Amount in specified currency<br>
+            # Currency (BTC or fiat currencies)<br>
+            # Amount to be paid as BTC<br>
+            # Company name of the seller<br>
+            # Motto of the seller<br>
+            # Company Logo URL<br>
+            # First line of address of seller<br>
+            # Second line of address of seller<br>
+            # Item name<br>
+            # Description of payment<br>
+            # Is escrow payment? true or false<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <a onclick="window.history.back();">Go Back</a><br>
+    </div>
+  </div>
+
+  <div id="examples" class="row">
+    <div class="col-sm-12">
+      <h2 class="section">Examples</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div style="line-height:110%;display:block;text-align:left;">
+      Display in
+        <select id="tutorial_language" class="form-control" style="width:auto;height:auto;margin-left:20px;display:inline;">
+          <option value="php">PHP (Default)</option>
+          <option value="python">Python</option>
+          <option value="nodejs">NodeJS</option>
+        </select>
+      </div>
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <br>
+      Creating a payment
+      <div class="php">
+        <pre class="libcode">
+        <code class="language-php">
+//example in PHP
+include_once('./coinvoy.php');
+
+$cv = new Coinvoy();
+
+/* mandatory parameters */
+$amount = 0.1;
+$currency = "BTC";
+// $amount = 13;
+// $currency = "USD";
+$address = "19tsNebvakhmiYnNtYYPamTVRJW1fkEyXf"; // your receiving address
+
+/* optional parameters */
+$options = array(
+'orderID'     => 'item_101',
+'secret'      => 'random string for each request',
+'callback'    => 'https://yoursite.com/ipn', // your ipn url
+'description' => 'best product in known universe'
+);
+
+$payment = $cv->payment($amount, $currency, $address, $options);
+
+echo $payment->html; #default payment display
+# or customize using payment url
+echo "&lt;iframe src='".$payment->url."'&gt;&lt;iframe&gt;";
+# or going further
+echo "Payments to ".$payment-&gt;address;
+$status = $cv->status($payment->id);</code>
+        </pre>
+      </div>
+      <div class="python">
+        <pre class="libcode">
+        <code class="language-python">
+from coinvoy import Coinvoy
+
+coinvoy = Coinvoy()
+
+## mandatory parameters ##
+amount   = 0.1
+currency = "BTC"
+# amount = 13
+# currency = "USD"
+address = "19tsNebvakhmiYnNtYYPamTVRJW1fkEyXf" # your receiving address
+
+## optional parameters ##
+options = {
+'orderID'     : 'item_101',
+'secret'      : 'random string for each request',
+'callback'    : 'https://yoursite.com/ipn', // your ipn url
+'description' : 'best product in known universe'
+}
+
+#create invoice
+payment = coinvoy.payment(amount, currency, address, options);
+
+print(payment)</code>
+        </pre>
+      </div>
+      <div class="nodejs">
+        <pre class="libcode">
+        <code class="language-javascript">
+var Coinvoy = require('./coinvoy.js').Coinvoy;
+
+var coinvoy = new Coinvoy();
+
+/* mandatory parameters */
+var amount   = 0.1
+var currency = "BTC"
+// var amount = 13
+// var currency = "USD"
+var address = "19tsNebvakhmiYnNtYYPamTVRJW1fkEyXf" // your receiving address
+
+/* optional parameters */
+var options = {
+orderID     : 'item_101',
+secret      : 'random string for each request',
+callback    : 'https://yoursite.com/ipn', // your ipn url
+description : 'best product in known universe'
+}
+
+coinvoy.payment(amount, currency, address, function(payment) {
+console.log(payment);
+}, options);</code>
+        </pre>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      Payment notification validation for IPN listeners:
+      <div class="php">
+        <pre class="libcode">
+        <code class="language-php">
+//example in PHP
+//yourwebsite/ipn.php
+include_once('./coinvoy.php');
+
+$cv = new Coinvoy();
+
+$secret = "secret used to create payment";
+
+$params = json_decode(file_get_contents('php://input'), true);
+
+// Validate notification
+if (!$cv->validateNotification($params['hash'], $params['invoiceID'], $params['orderID'], $secret)) {
+echo "Invalid";
+return false;
+} else {
+//process payment using $status
+}</code>
+        </pre>
+      </div>
+      <div class="python">
+        <pre class="libcode">
+        <code class="language-python">
+# include Coinvoy class
+from coinvoy import Coinvoy
+
+coinvoy = Coinvoy()
+
+secret = "secret used to create payment"
+
+# params = json.loads(request.body) # django
+params = cherrypy.request.json # cherrypy
+
+// Validate notification
+if not coinvoy.validateNotification(params['hash'], params['invoiceID'], params['orderID'], secret):
+print("Invalid")
+return False;
+else:
+# process payment using coinvoy.status()</code>
+        </pre>
+      </div>
+      <div class="nodejs">
+        <pre class="libcode">
+        <code class="language-javascript">
+// yourwebsite/ipn
+var Coinvoy = require('./coinvoy.js').Coinvoy;
+
+var coinvoy = new Coinvoy();
+
+var secret = "secret used to create payment"
+
+var params = req.body; // parameters from post body
+
+// Validate notification
+if (!coinvoy.validateNotification(params['hash'], params['invoiceID'], params['orderID'], secret, function (result) {
+if (!result.success) {
+console.log('Invalid');
+return false;
+}
+
+// process payment using coinvoy.status()
+});
+
+        </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  window.onload = function() {
+   hideList = document.querySelectorAll('div.python, div.nodejs');
+    for (var i=0; i < hideList.length;i++) {
+      hideList[i].style.display = "none";
+    }
+  }
+  document.getElementById('tutorial_language').onchange = function() {
+    hideList = document.querySelectorAll('div.php, div.python, div.nodejs');
+    for (var i=0; i < hideList.length;i++) {
+      hideList[i].style.display = "none";
+    }
+    //show selected
+    elementList = document.querySelectorAll('div.'+this.value)
+    for (var i=0; i<elementList.length; i++) elementList[i].style.display = "block";
+  }
+</script>

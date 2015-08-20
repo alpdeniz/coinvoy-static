@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<style>
+    body {
+        background-image:url('/static/img/background.jpg');
+        background-size:100%;
+        background-position-y:-60px;
+    }
+    .bodyDiv {
+        background-color:rgba(66,196,190,0.2);
+    }
+    .headerRow {
+        color: white;
+    }
+
+    /* MOBILE */
+    @media (max-width:768px) {
+
+        body {
+            background-size: auto;
+        }
+        
+    }
+    
+</style>
+
+<div class="wallet-intro">
+    <h3>The Wallet</h3>
+    <div>
+        This wallet is designed as part of the Coinvoy Secure Wallet Project dedicated to offer a safe and friendly Bitcoin experience to all individuals and businesses at no cost.
+        <br><br>
+        Enabling autonomous control and sole ownership on Bitcoin funds, Coinvoy Wallet account functions as a gateway to conveniently reach your Bitcoins, send or receive transactions, and even socialize in your financial activities.
+        <br><br>
+        Coinvoy does not store your data, making your wallet account virtually impossible to penetrate for anyone but you. Read more about our security measures <a href="/the-wallet" style="font-weight:600;color:rgb(80,170,80);">here</a>
+    </div>
+</div>
+
+<div class="row slogan">
+    <div class="col-sm-10 col-sm-offset-1">
+        {{::msg.slogan.translate()}}
+    </div>
+</div>
+
+<div class="registerLine">
+    <div style="line-height:36px;font-size:24px;margin-bottom:15px;">
+        Bitcoin Wallet for individuals and businesses
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <!-- <input type="email" placeholder="Email" ng-modal="registerMail" style="float:left;width:50%;"/> -->
+            <button class="signUp" ng-click="openRegisterBox()">{{::msg.register2}}</button>
+        </div>
+    </div>
+</div>
+
+<div class="dim" ng-show="registerBox" ng-click="resetRegister()">
+    </div>
+<div class="register modal" ng-show="registerBox">
+    <div class="row" ng-show="registerBox != true">
+        <div class="col-xs-12" style="text-align:center;">
+            {{registerBox}}
+        </div>
+    </div>
+    <div class="row" ng-show="registerBox == true">
+        <div class="col-sm-12">
+            <form autocomplete="on">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 style="margin-top:-4px;">{{::msg.register}}</h4>
+                    </div>
+                </div>
+                <div class="row modalMsg" ng-class="registerV.success? 'success':'error'" ng-show="registerV.msg">
+                    {{registerV.msg}}
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        E-mail
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="registerMail" class="" type="text" placeholder="{{::msg.mailPlaceholder}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        {{::msg.password}}
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="registerPass" class="" type="password" placeholder="{{::msg.passPlaceholder}}" ng-keydown="calcPassword()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div style="height:3px;background:{{pass.color}};width:{{pass.strength}}%;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="color:{{pass.color}};height:14px;font-size:13px;text-align:center;">{{pass.text}}</div>
+                </div>
+                <div class="row" style="text-align:center;padding:3px;">
+                    <button class="btn btn-success" ng-click="register()" style="padding:4px 15px;">{{::msg.register}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

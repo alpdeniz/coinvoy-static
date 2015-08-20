@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html ng-app="wallet">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coinvoy secure bitcoin wallet">
+    <meta name="author" content="ilkeryasin">
+    <link rel="shortcut icon" href="/static/img/favicon.ico?v=0.02">
+
+    <meta name="keywords" content="coinvoy, secure, bitcoin, wallet, web wallet, exchange" />
+    <meta property="og:title" content="Coinvoy" />
+    <meta property="og:description" content="Coinvoy secure bitcoin wallet" />
+    <meta property="og:image" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:title" content="Coinvoy" />
+    <meta name="twitter:description" content="Coinvoy secure bitcoin wallet" />
+    <meta name="twitter:image" content="" />
+    
+
+    <title> Coinvoy Bitcoin Wallet - The best, most secure wallet with instant exchange </title>
+  
+  <!-- Bootstrap -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="/static/css/style.css" rel="stylesheet" media="screen">
+  <link href="/static/css/xcharts.min.css" rel="stylesheet" media="screen">
+  <link rel="icon" type="image/png" href="/static/img/fav.png">
+
+</head>
+<body ng-controller="walletBody" style="font-family:Helvetica, arial;">
+    <div class="" style="width:100%;">
+        <div class="row head">
+            <div class="col-sm-4">
+                <a href="./index.html">
+                    <div class="banner">
+                        Coinvoy Web Wallet
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-8" style="">
+                <div ng-show="user" style="float:right;margin-left:25px;text-align:center;">
+                    <div>
+                        <img class="avatar" src="{{user.avatar}}" alt="avatar">
+                    </div>
+                    <div class="username">{{user.email}}</div>
+                </div>
+                <a ng-repeat="item in menu" href="{{item.link}}" class="menu">
+                    {{item.title}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="row" style="background-color:#B6C78E;">
+            <div class="col-sm-6 col-sm-offset-3" style="padding:6px">
+                <div class="row">
+                    <div class="col-sm-2" style="padding:3px;text-align:right;">
+                        Send To
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" ng-change="sendTyping()" ng-model="sendTo" style="width:100%;">
+                        <div class="typeahead" ng-show="typeResult">
+                            <div ng-repeat="email in typeResult" class="typeItem" ng-click="sendTo=email">
+                                {{email}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="" style="height:100%;overflow:hidden;">
+        <div class="sideCol" style="">
+            <div class="settings" style="padding:20px;text-align:center;font-size:24px;font-weight:bold;">
+                Your WALLET
+                <div style="margin:10px 0;font-size:18px;color:rgba(10,10,10,0.7);">
+                    Total: {{wallet.total}} BTC
+                </div>
+                <div ng-repeat="address in wallet.addresses" style="font-size:10px;">
+                    <div>{{address.address}}</div>
+                </div>
+                <div style="margin-top:20px;">
+                    <div ng-repeat="item in sidebar" class="sidebar">
+                        <span><img src="{{item.img}}" style="height:25px;margin-right:10px;"></span><span>{{item.title}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mainCol" style="">
+            <div class="" style="">
+                <xchart id='myChart' style="height: 300px;margin-top:20px;" data="data" type="chartType" opts="chartOpts"></xchart>
+            </div>
+            <div class="" style="text-align:center;font-size:16px;padding:6px;">
+                Transaction Records
+            </div>
+            <div class="" style="">
+                <div class="row tx" ng-repeat="tx in wallet.allTxs" ng-class="{true:'tx-in', false:'tx-out'}[tx.amount>0]">
+                    <div class="col-sm-3 txDate">{{tx.date}}</div>
+                    <div class="col-sm-2 txAmount">{{tx.amount}} BTC</div>
+                    <div class="col-sm-6 txInfo"></div>
+                    <div class="col-sm-1" ng-class="{true: 'txInImg', false: 'txOutImg'}[tx.amount>0]"></div>
+                    <!-- <span class="col-sm 7 txInfo">{{tx.from}} BTC</span> -->
+                </div>
+            </div>
+        </div>
+        <div class="sideCol">
+            <div class="exchange" style="padding:20px;text-align:center;font-size:24px;font-weight:bold;">
+                Exchange - FIAT
+            </div>
+            <div style="padding;12px;">
+                <div class="buyBtn" style="">
+                    BUY
+                </div>
+            </div>
+            <div style="padding;12px;">
+                <div class="sellBtn" style="">
+                    SELL
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+
+    </div>
+    <div class="footer">
+        <span>Lorem ipsum dolor sit amet.</span><span style="float:right;">2014&copy; Coinvoy</span>
+    </div>
+        
+<!-- load scripts using require.js -->
+<script type="text/javascript" src="/static/js/modules/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/modules/d3.min.js"></script>
+<script type="text/javascript" src="/static/js/modules/xcharts.min.js"></script>
+<script type="text/javascript" src="/static/js/modules/ng-xCharts.js"></script>
+<script type="text/javascript" src="/static/js/modules/bitcoinjs.js"></script>
+<script type="text/javascript" src="/static/js/modules/md5.js"></script>
+<script type="text/javascript" src="/static/js/modules/sha1.js"></script>
+<script type="text/javascript" src="/static/js/modules/pbkdf2.js"></script>
+<script type="text/javascript" src="/static/js/controllers/wallet.js"></script>
+<script type="text/javascript" src="/static/js/controllers/walletController.js"></script>
+
+<!-- <script type="text/javascript" src="../js/bootstrap.min.js"></script> -->
+<script type="text/javascript">
+    window.email = "alpdeniz@gmail.com";
+    window.salt = "salt123";
+    window.addresses = [
+        {
+            address: "3PS2BKW5HLBduz6C93MCh3pTFJ4cnaPAyX",
+            inputs: [
+                {
+                    hash: "txhash1",
+                    amount: 0.45,
+                    date: 1412402690
+                },
+                {
+                    hash: "txhash2",
+                    amount: 0.5,
+                    date: 1414102690
+                },
+                {
+                    hash: "txhash3",
+                    amount: 0.01,
+                    date: 1415402690
+                }
+            ],
+            outputs: [
+                {
+                    hash: "txhash4",
+                    amount: 0.2,
+                    date: 1413202690
+                },
+                {
+                    hash: "txhash5",
+                    amount: 0.2,
+                    date: 1414802690
+                }
+            ]
+        },
+        {
+            address: "35zRGERTgDR8rNFkSW29MJTgsNWHUpVg66",
+            inputs: [
+                {
+                    hash: "txhash1",
+                    amount: 0.6,
+                    date: 1412602690
+                },
+                {
+                    hash: "txhash2",
+                    amount: 0.7,
+                    date: 1415002690
+                },
+                {
+                    hash: "txhash3",
+                    amount: 0.1,
+                    date: 1413702690
+                }
+            ],
+            outputs: [
+                {
+                    hash: "txhash4",
+                    amount: 0.4,
+                    date: 1414602690
+                }
+            ]
+        }
+    ];
+</script>
+</body>
+</html>

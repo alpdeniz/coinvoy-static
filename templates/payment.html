@@ -1,0 +1,161 @@
+## -*- coding: utf-8 -*-
+
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coinvoy - Flexible Payment Gateway for Cryptocurrencies">
+    <meta name="author" content="ilkeryasin">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <title>Coinvoy - Payment</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,500' rel='stylesheet' type='text/css'>
+    <link href="/static/css/payment.css?v=1.03" rel="stylesheet">
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/js/jquery.qrcode.min.js"></script>
+    <script src="/static/js/jquery.zclip.min.js"></script>
+  </head>
+  <body>
+    <div id="coinvoy-wrapper" class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="row" style="background-color:rgba(120,120,120,0.9);">
+            <div class="col-xs-8 col-xs-offset-2">
+              <div class="" style="text-align:center;min-height:20px;">
+                % if payment.company_logo:
+                  <div>
+                    <img src="${payment.company_logo}" class="logoImg" alt=""/>
+                  </div>
+                % endif
+                <div id="company">
+                  ${payment.company}
+                </div>
+                <div id="companyText">
+                  ${payment.slogan}<!-- Leading diamonds for years -->
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div id="close" class="close">
+                &times;
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-xs-5 col-xs-offset-1">
+            <div id="item">
+            % if payment.item:
+              ${payment.item}
+            % else:
+              % if float(payment.pay_amount) == -1:
+                Donation
+              % else:
+                Payment
+              % endif
+            % endif
+            </div>
+        </div>
+        <div class="col-xs-5" style="text-align:right;">
+            % if float(payment.pay_amount) == -1:
+              <div id="payAmount">Any Amount</div>
+            % else:
+              <div id="payAmount">${payment.pay_amount} BTC</div>
+              % if payment.currency != 'BTC':
+                <div id="amount">${payment.amount} ${payment.currency}</div>
+              % endif
+            % endif
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:10px;">
+        <div class="col-xs-9 col-xs-offset-1">
+          <div id="itemDesc">${payment.description}</div>
+        </div>
+        <div class="col-xs-1">
+          <div id="clipsaved" style="display:none;">
+            Address copied!
+          </div>
+        </div>
+      </div>
+
+      <div id="waitingRow" class="row" style="margin-top:15px;margin-bottom:15px;">
+        <div class="col-xs-3 col-xs-offset-1">
+            <div id="qrcode" style="float:left;">
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <div style="margin:3px;">
+              % if float(payment.pay_amount) == -1:
+                Send any heartful of BTC to this address.
+              % else:
+                Send exactly ${payment.pay_amount} BTC to this address.
+              % endif
+                <!-- Send exactly 0.01 BTC to this address -->
+            </div>
+            <div id="newAddress" style="padding:5px;border:1px solid #989898;margin:3px;font-size:11px;">
+              ${payment.address}
+            </div>
+            <div style="margin:3px;text-align:left;margin-top:8px;">
+              <div style="width:64%;float:left;">
+                <button id="copy" style="padding:6px 12px;background:#689539;border-radius:4px;color:white;font-size:15px;">COPY ADDRESS</button>
+              </div>
+              <div style="width:36%;float:right;text-align:right;">
+                <span id="clockImg">
+                  <img src="/static/img/clock.png" alt="clock" style="width:28px;height:28px;"/>
+                </span>
+                <span id="timer">
+                  9:59
+                </span>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:25px;margin-bottom:25px;">
+        <div class="col-xs-10 col-xs-offset-1">
+          <div id="statusBox">
+            WAITING FOR 
+            % if float(payment.pay_amount) == -1:
+             DONATION
+            % else:
+             PAYMENT
+            % endif
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div id="footer">
+            <div style="margin-left:20%;width:60%;float:left;">
+              <a href="https://coinvoy.net" target="_blank">
+                <div>&copy;2014 COINVOY
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="loadingDim">
+      Loading...
+    </div>
+
+    <script>
+      var buyer  = "${payment.buyer}";
+      var amount = "${payment.amount}";
+      var currency = "${payment.currency}";
+      var payAmount = "${payment.pay_amount}";
+      var payCurrency = "Bitcoin";
+      window.host = "${host}";
+      window.address = "${payment.address}";
+      var id = "${payment.id}";
+      var init = ${payment.time} - ${time} + 599;
+    </script>
+    <script src="/static/js/payment.js?v=1.10"></script>
+  </body>
+  </html>

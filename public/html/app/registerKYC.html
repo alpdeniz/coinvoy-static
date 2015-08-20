@@ -1,0 +1,45 @@
+<div class="row jumboAcc" style="">
+    <div class="col-sm-10 col-sm-offset-1">
+        {{msgs.title.translate()}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5 col-sm-offset-1" style="padding:10px;">
+        <!-- <div class="row">
+            <div class="col-sm-4">
+                Isim
+            </div>
+            <div class="col-sm-8">
+                {{user.name}}
+            </div>
+        </div> -->
+        <div class="row" style="margin-top:10px;background-color:rgba(254,254,254,0.1);padding:6px;">
+            <div class="col-sm-4" style="padding-top:4px;">
+                {{msgs.fullName.translate()}}
+            </div>
+            <div class="col-sm-8">
+                <input type="text" ng-model="user.name" placeholder="{{msgs.fullNamePlaceholder.translate()}}">
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;background-color:rgba(254,254,254,0.1);padding:6px;">
+            <div class="col-sm-4" style="padding-top:4px;">
+                E-mail
+            </div>
+            <div class="col-sm-8">
+                <input type="text" ng-model="user.email" disabled="">
+            </div>
+        </div>
+        
+        <div class="row" style="">
+            <hr>
+        </div>
+    </div>
+    <div class="col-sm-5 col-sm-offset-1" style="padding:10px;">
+        <div class="row rowBtn">
+            <div>{{msgs.uploadDocs.translate()}}</div>
+        </div>
+        <div class="row rowBtn">
+            <div>{{msgs.merchInfo.translate()}}</div>
+        </div>
+    </div>
+</div>

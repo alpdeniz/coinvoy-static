@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<style>
+    body {
+        background-image:url('/static/img/merchants/background.jpg');
+        background-size:100%;
+        background-position-y:-60px;
+    }
+    .bodyDiv {
+        background-color:rgba(0,0,0,0.28);
+    }
+    .headerRow {
+        color: white;
+    }
+
+    /* MOBILE */
+    @media (max-width:768px) {
+
+        body {
+            background-size: auto;
+        }
+        
+    }
+    
+</style>
+
+<div class="wallet-intro">
+    <div>
+        Coinvoy Business is a free wallet account for receiving Bitcoin as merchants, institutions or individuals in form of payments or donations. It frees you of the middle man and helps you collect into the safest wallet.
+        <div style="padding: 10px;font-size: 110%;">
+            It is still in development phase and will be up very soon.
+        </div>
+    </div>
+</div>
+
+<div class="row slogan">
+    <div class="col-sm-10 col-sm-offset-1">
+        BUSINESS WALLET
+    </div>
+</div>
+
+<div class="registerLine">
+    <div style="line-height:36px;font-size:24px;margin-bottom:15px;">
+        Accept Bitcoin
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <!-- <input type="email" placeholder="Email" ng-modal="registerMail" style="float:left;width:50%;"/> -->
+            <button class="signUp" ng-click="openRegisterBox()">{{::msg.register2}}</button>
+        </div>
+    </div>
+</div>
+
+<div class="dim" ng-show="registerBox" ng-click="resetRegister()">
+    </div>
+<div class="register modal" ng-show="registerBox">
+    <div class="row" ng-show="registerBox != true">
+        <div class="col-xs-12" style="text-align:center;">
+            {{registerBox}}
+        </div>
+    </div>
+    <div class="row" ng-show="registerBox == true">
+        <div class="col-sm-12">
+            <form autocomplete="on">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 style="margin-top:-4px;">{{::msg.register}}</h4>
+                    </div>
+                </div>
+                <div class="row modalMsg" ng-class="registerV.success? 'success':'error'" ng-show="registerV.msg">
+                    {{registerV.msg}}
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        E-mail
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="registerMail" class="" type="text" placeholder="{{::msg.mailPlaceholder}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        {{::msg.password}}
+                    </div>
+                    <div class="col-sm-8">
+                        <input ng-model="registerPass" class="" type="password" placeholder="{{::msg.passPlaceholder}}" ng-keydown="calcPassword()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div style="height:3px;background:{{pass.color}};width:{{pass.strength}}%;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="color:{{pass.color}};height:14px;font-size:13px;text-align:center;">{{pass.text}}</div>
+                </div>
+                <div class="row" style="text-align:center;padding:3px;">
+                    <button class="btn btn-success" ng-click="register()" style="padding:4px 15px;">{{::msg.register}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

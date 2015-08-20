@@ -1,0 +1,148 @@
+## -*- coding: utf-8 -*-
+
+<!DOCTYPE html>
+<html lang="en" ng-app="app"> 
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coinvoy - Flexible Payment Gateway for Cryptocurrencies">
+    <meta name="author" content="ilkeryasin">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <title>Coinvoy - Invoice</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/invoice.css?v=1.00" rel="stylesheet">
+    <!--<script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/js/jquery.qrcode.min.js"></script>-->
+
+    <link href='//fonts.googleapis.com/css?family=Ubuntu:500,700' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body style="background-color: rgba(100, 100, 130, 0.5);">
+    <div class="container" style="min-height:100%;height:auto;">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2" style="background-color: rgba(254, 252, 252, 0.9);box-shadow: 0px 5px 5px 1px; border: 1px solid rgb(119, 119, 119);margin-top:45px;margin-bottom:25px;">
+          <div class="container">
+            <div class="row" style="border-bottom:1px solid #999;margin-bottom:20px;">
+              <div class="col-sm-8">
+                <div style="padding:5px;font-size:26px;">
+                  <img src="/static/img/logo.png?v=0.01" alt="Coinvoy" id="logoImg" style="float:left;width:80px;">
+                  <div style="font-family: 'Ubuntu', sans-serif;float:left;margin:22px 5px 0px -20px;color:rgb(115,166,115);">COINVOY</div>
+                </div>
+              </div>
+              <div class="col-sm-4" style="padding:15px;text-align:right;margin-top:35px;font-size:17px;">
+                ${payment.status}
+              </div>
+            </div>
+
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Invoice ID
+              </div>
+              <div class="col-sm-7">
+                <a href="https://coinvoy.net/invoice/${payment.d}" target="_blank">#${payment.id}</a>
+              </div>
+            </div>
+            % if payment.company:
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Company
+              </div>
+              <div class="col-sm-7">
+                ${payment.company}
+              </div>
+            </div>
+            % endif
+            % if payment.item:
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Item
+              </div>
+              <div class="col-sm-7">
+                ${payment.item}
+              </div>
+            </div>
+            % endif
+            % if payment.description:
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Description
+              </div>
+              <div class="col-sm-7">
+                ${payment.description}
+              </div>
+            </div>
+            % endif
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Payment Address
+              </div>
+              <div class="col-sm-7">
+                ${payment.address}
+              </div>
+            </div>
+            % if float(payment.pay_amount) != -1:
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Item Value
+              </div>
+              <div class="col-sm-7">
+                ${payment.amount} ${payment.currency}
+              </div>
+            </div>
+            % else:
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Donation Value
+              </div>
+              <div class="col-sm-7">
+              % if float(payment.pay_amount) != -1:
+                ${payment.pay_amount} BTC
+              % else:
+                Yet unknown
+              % endif
+              </div>
+            </div>
+            % endif
+            <div class="row" style="padding:6px;">
+              <div class="col-sm-5">
+                Invoice Date
+              </div>
+              <div id="dateOpened" class="col-sm-7">
+              </div>
+            </div>
+            <div class="row" style="border-top:2px solid #666;margin-top:30px;text-align:center;padding:6px;font-weight:600;">
+              Coinvoy&copy; 2014
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var buyer  = "${payment.buyer}";
+      var amount = "${payment.amount}";
+      var currency = "${payment.currency}";
+      var address = "${payment.address}";
+      var id = "${payment.id}";
+      var invoiceTime = "${payment.time}";
+
+      date = new Date(invoiceTime * 1000);
+      datevalues = date.getFullYear() + "/" + (parseInt(date.getMonth())+1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+      document.getElementById('dateOpened').innerHTML = datevalues;
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45959899-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>

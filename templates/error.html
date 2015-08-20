@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coinvoy - Flexible Payment Gateway for Cryptocurrencies">
+    <meta name="author" content="ilkeryasin">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <title>Coinvoy - Error</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,500' rel='stylesheet' type='text/css'>
+    <link href="/static/css/payment.css?v=1.03" rel="stylesheet">
+  </head>
+  <body style="">
+    <div id="coinvoy-wrapper" class="container" style="background-color:rgba(187,187,187,0.9); padding:0px;text-align:center !important;">
+      <div class="row" style="background-color:rgba(120,120,120,0.9);padding:10px;">
+        <div style="font-size:20px;font-weight:500;color:white;">
+          COINVOY
+        </div>
+      </div>
+      <div class="row" style="padding:40px;color:#555;">
+        <div style="line-height:60px;font-size:16px;padding:15px;">
+          ${message}
+        </div>
+      </div>
+    </div>
+    <script>
+      var adjustFrameHeight = function() {
+          parent.postMessage('height:250px','*');
+      }
+
+      window.onload = function() {
+          adjustFrameHeight();
+      }
+    </script>
+  </body>
+</html>

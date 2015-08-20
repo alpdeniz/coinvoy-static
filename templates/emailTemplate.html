@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"> 
+  <head>
+    <meta charset="utf-8">
+    <style>
+        html,body 
+        {
+            min-height: 100% !important;
+            height: auto;
+            font-family: helvetica,arial;
+            font-size: 13px;
+        }
+
+        a 
+        {
+            text-decoration: none;
+            color:#333333;
+        }
+
+        .footer 
+        {
+            clear: both;
+            position: relative;
+            z-index: 10;
+            margin-top: -42px;
+            margin-left: 10%;
+            margin-right: 10%;
+            height: 42px;
+            border-top:3px groove #eef;
+            padding-top: 9px;
+            font-size: 12px;
+            font-weight: bold;
+            color:#111;
+            text-align: center;
+        }
+        .col-sm-5 {
+            padding:5px;
+            width: 37.5%;
+            float: left;
+        }
+        .col-sm-7 {
+            padding: 5px;
+            width:55%;
+            float:left;
+        }
+        .row {
+            float:left;width:100%;
+        }
+    </style>
+
+    <link href='//fonts.googleapis.com/css?family=Ubuntu:500,700' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+    <div class="container" style="min-height:100%;height:auto;  background-color:rgba(230,230,230,0.5);width:100%;float:left;">
+        <div>
+            <div style="background-color: rgba(254, 252, 252, 0.9);box-shadow: 0px 5px 5px 1px; border: 1px solid rgb(199,199,199);box-shadow: 0px 0px 1px 2px rgba(160,160,160,0.3);margin:25px 15%;width:60%;padding:5%;float:left;">
+                <div class="row" style="border-bottom:2px solid #888;margin-bottom:5px;margin-top:-20px;float:left;width:100%;">
+                    <div style="float:left;width:100%;">
+                        <div style="padding:5px;font-size:20px;">
+                            <img src="https://coinvoy.net/static/img/logo.png?v=0.01" alt="Coinvoy" id="logoImg" style="float:left;width:40px;margin-bottom:8px;">
+                            <div style="font-family: 'Ubuntu', sans-serif;float:left;margin:8px;color:#42c5be;">COINVOY</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="float:left;width:90%;padding:5%;">
+
+                	<%include file="emails/${emailType}.html"/>
+
+                </div>
+                
+                <div class="row" style="border-top:2px solid #888;margin-top:5px;text-align:center;padding:6px 5%;font-weight:600;float:left;width:90%;">
+                    Coinvoy&copy; 2014
+                </div>     
+            </div>
+        </div>
+    </body>
+</html>

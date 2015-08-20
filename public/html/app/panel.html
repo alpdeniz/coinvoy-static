@@ -1,0 +1,77 @@
+<div class="row jumboAcc" style="">
+    <div class="col-sm-12">
+        Panel
+    </div>
+</div>
+<div class="row" style="padding:30px;background-color:#fafaf5;">
+    <div class="col-sm-4 col-xs-12">
+    	<div class="part">
+    		<div class="head">Users</div>
+    		<div class="setting">
+    			<span>Has Bitcoins?</span><span><input style="width:20px;margin-left:10px;" type="checkbox" ng-model="filter.hasBitcoins" ng-change="filterUsers()"/></span>
+    			<span>At first step?</span><span><input style="width:20px;margin-left:10px;" type="checkbox" ng-model="filter.unconfirmedUser" ng-change="filterUsers()"/></span>
+    		</div>
+			<div ng-repeat="u in users" ng-click="selectUser(u, $event)" class="item" ng-class="{'selected' : u.selected}">
+				<span ng-if="u.avatar"><img src="{{u.avatar}}" style="width:30px;height:30px;margin:3px;"></span><span style="margin:5px;">{{u.name}}</span> </span><span style="margin:5px;">{{u.email}}</span>- <span>{{u.account.total}}</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 col-xs-12">
+		<div class="part">
+			<div>
+				<div class="head">Number of Users</div>
+				<div style="text-align:center;padding:5px;">{{::wallet_data.user_count}}</div>
+			</div>
+			<div>
+				<div class="head">Total Bitcoins </div>
+				<div style="text-align:center;padding:5px;">{{::wallet_data.total}}</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 col-xs-12">
+		<div class="part">
+			<div class="head">
+				User
+			</div>
+			<div ng-if="sUser.avatar" style="text-align:center;">
+				<img src="{{sUser.avatar}}" style="width:50px;height:50px;margin:6px;">
+			</div>
+			<div ng-if="sUser.name" style="text-align:center;">{{sUser.name}} {{sUser.sirname}}</div>
+			<div class="email-button" style="text-align:center;" ng-click="open_email([sUser])">{{sUser.email}}</div>
+			
+			<div class="head">
+				Unspents
+			</div>
+			<div ng-repeat="utxo in sUser.account.unspents" class="item">
+				{{utxo.account}} - {{utxo.amount}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="dim" ng-show="email" ng-click="close_email()"></div>
+<div class="email modal" ng-show="email">
+	<div class="section">
+		<span ng-repeat="u in email.users" class="email-user">
+	        <span style="margin:5px;">
+	            <img ng-src="{{u.avatar}}" ng-if="u.avatar" class="avatar" style="width:20px;height:20px;margin-bottom:0;"/>
+	        </span>
+	        <span style="line-height:28px">
+	            {{u.email}}
+	        </span>
+	    </span>
+	</div>
+	<div class="section">
+		<span class="email-type" ng-class="{'selected' : email.type=='blank'}" ng-click="email.type='blank'">Blank</span>
+		<span class="email-type" ng-class="{'selected' : email.type=='maintenance'}" ng-click="email.type='maintenance'">Maintenance</span>
+	</div>
+	<div class="section">
+		<input type="text" ng-model="email.subject" placeholder="Email subject"/>
+	</div>
+	<div class="section">
+		<textarea class="email-content" ng-model="email.content"></textarea>
+	</div>
+	<div class="section">
+		<button class="btn btn-primary" style="padding:4px 30px;float:right;" ng-click="email.send()">Send</button>
+	</div>
+</div>

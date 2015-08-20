@@ -1,0 +1,122 @@
+<style>
+    body {
+        background-color: rgba(233,233,233, 0.05);
+    }
+    .bodyDiv {
+        background-color: none;
+    }
+    .headerRow {
+        background-color: rgb(80,170,80);
+        color: white;
+    }
+</style>
+
+<!-- <div class="row jumboAcc" style="">
+    <div class="col-sm-12">
+        Account
+    </div>
+</div> -->
+<div class="row content" style="margin:35px 0px;text-align:center;">
+    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+        <!-- <div class="row">
+            <div class="col-sm-4">
+                Isim
+            </div>
+            <div class="col-sm-8">
+                {{user.name}}
+            </div>
+        </div> -->
+        <div class="row setting-section">
+            <div class="row setting-item">
+                <div class="col-sm-3 setting-label">
+                    E-mail
+                </div>
+                <div class="col-sm-9">
+                    {{user.email}}
+                </div>
+            </div>
+            <div class="row setting-item">
+                <div class="col-sm-3 setting-label">
+                    First name
+                </div>
+                <div class="col-sm-9">
+                    <input type="text" ng-model="user.name" style="text-align:center;"/>
+                </div>
+            </div>
+            <div class="row setting-item">
+                <div class="col-sm-3 setting-label">
+                    Last name
+                </div>
+                <div class="col-sm-9">
+                    <input type="text" ng-model="user.sirname" style="text-align:center;"/>
+                </div>
+            </div>
+            <div class="row setting-item">
+                <div class="col-sm-offset-8 col-sm-4">
+                    <button class="btn btn-warning" style="padding:6px 30px;float:right;" ng-click="updateSettings();">Update</button>
+                </div>
+            </div>
+            <div class="row setting-item" style="margin-top:0px;">
+                <div class="col-sm-offset-6 col-sm-6" style="height:6px;margin-top:-6px;text-align:right;font-size:80%;color:#888;">
+                    {{updateMessage}}
+                </div>
+            </div>
+        </div>
+        <div class="row setting-section" style="margin-top:25px;">
+            <div class="row setting-item">
+                <div class="col-sm-3 setting-label" style="margin-top:0;">
+                    <div>Avatar</div>
+                </div>
+                <div class="col-sm-9 drop-field" nv-file-drop nv-file-over uploader="uploader">
+                    <div>
+                        <div>Drop your new avatar here</div>
+                        <div style="text-align:center;"><img ng-src="{{user.avatar}}" class="avatar" style="margin:10px;"/></div>
+                    </div>
+                    <div>
+                        <button class="btn btn-warning hideInput" ng-click="fileSelect()">or choose one</button>
+                        <input id="avatarSelect" style="display:none;" type="file" nv-file-select uploader="uploader"/>
+                    </div>
+                    <div style="margin:5px 0;height:15px;">
+                        <div style="height:4px;background:green;width:{{uploader.progress%100}}%;">
+                            
+                        </div>
+                        <div style="font-size:80%;color:#888;margin-top:-4px;">
+                            {{avatarMessage}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div class="col-sm-4 col-sm-offset-1 col-xs-12" style="padding:10px;">
+        <div class="row rowBtn">
+            <div ng-click="changePassBox=!changePassBox">{{msgs.changePass.translate()}}</div>
+            <div class="modalMsg" ng-class="{'errorMsg' : changeError, 'successMsg': changeSuccess}" ng-show="changeMsg">
+                {{changeMsg}}
+            </div>
+            <div ng-show="changePassBox">
+                <div class="row" style="margin-top:5px;margin-bottom:5px;">
+                    <div class="col-sm-4" style="width:35%;padding-right:0;">
+                        <input type="password" ng-model="oldPass" placeholder="{{msgs.oldPass.translate()}}"/>
+                    </div>
+                    <div class="col-sm-4" style="width:35%;padding-right:0;">
+                        <input type="password" ng-model="newPass" placeholder="{{msgs.newPass.translate()}}"/>
+                    </div>
+                    <div class="col-sm-4" style="width:28%;padding-right:0;">
+                        <input type="password" ng-model="pin" placeholder="PIN"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:5px;margin-bottom:5px;">
+                    <div class="col-sm-4 col-sm-offset-4" style="padding-right:5px;">
+                        <button class="btn btn-primary" style="padding:2.5px 6px;" ng-click="changePass()">{{msgs.changeBtn.translate()}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row rowBtn">
+            <div ng-click="toPage('recoverPIN')">{{msgs.recoverPIN.translate()}}</div>
+        </div>
+    </div>
+</div>

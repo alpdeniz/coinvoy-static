@@ -1,0 +1,17 @@
+<p style="font-size:14px;"></p>
+<p>
+    ${data['sender']} has just sent you ${data['amount']} bitcoins. You can collect your bitcoins by signing up to Coinvoy Wallet via https://coinvoy.net
+</p>
+<div>
+    % if data['message']:
+    <p>
+        There is also a message attached to it:
+    </p>
+    <p>
+        ${data['message']}
+    </p>
+    % endif
+</div>
+<p>
+    Have a lovely day!
+</p>
