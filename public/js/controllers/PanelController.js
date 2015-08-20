@@ -64,8 +64,16 @@ coinvoyWallet.controller("PanelController", ["$scope", "$http", "$timeout", "$lo
 	    }
     }
    	$scope.open_email = function(users) {
-   		$scope.email = new emailPrototype();
-   		$scope.email.users = users;
+        // init email modal
+        $scope.email = new emailPrototype();
+        if(!users) {
+            users = [];
+            for(var i=0; i < $scope.users.length; i++) {
+                if($scope.users[i].selected)
+                    users.push($scope.users[i]);
+            }
+        }
+        $scope.email.users = users;
     },
     $scope.close_email = function() {
     	$scope.email = false
