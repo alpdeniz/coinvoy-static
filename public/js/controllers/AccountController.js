@@ -11,22 +11,53 @@ coinvoyWallet.controller("AccountController", ["$scope", "$http", "$timeout", "$
     $scope.toPage = function(link) {
         $location.path(link);
     };
+    $scope.newProduct = function() {
+        $scope.product = {
+            "currency": "BTC",
+            "amount": "0.0000",
+        }
+    };
+    $scope.addProduct = function() {
+        $http.post('/wallet/api/add_product', $scope.product).success(function(){
+            $scope.productMessage = "Product added";
+            $scope.product = false;
+        }).error(function(e){
+            $scope.productMessage = "Error, but we are working on it.";
+            console.log("Error: "+e)
+        });
+        $timeout(function() {
+            $scope.productMessage = "";
+        },4000);
+    };
     $scope.updateSettings = function() {
         $http.post('/wallet/api/update_settings', {
             name: $scope.user.name,
             sirname: $scope.user.sirname,
         }).success(function(){
             $scope.updateMessage = "Settings successfully updated";
-            $timeout(function() {
-                $scope.updateMessage = "";
-            },2000);
         }).error(function(e){
             $scope.updateMessage = "Error, but we are working on it.";
-            $timeout(function() {
-                $scope.updateMessage = "";
-            },2000)
             console.log("Error: "+e)
         });
+        $timeout(function() {
+            $scope.updateMessage = "";
+        },4000);
+    };
+    $scope.updateMerchantSettings = function() {
+        $http.post('/wallet/api/update_merchant_settings', {
+            name: $scope.user.merchant.name,
+            slogan: $scope.user.merchant.slogan || "",
+            address_1: $scope.user.merchant.address_1 || "",
+            address_2: $scope.user.merchant.address_2 || "",
+        }).success(function(){
+            $scope.merchantUpdateMessage = "Settings successfully updated";
+        }).error(function(e){
+            $scope.merchantUdateMessage = "Error, but we are working on it.";
+            console.log("Error: "+e)
+        });
+        $timeout(function() {
+            $scope.merchantUpdateMessage = "";
+        },4000);
     };
     $scope.changePass = function() {
 
@@ -54,9 +85,9 @@ coinvoyWallet.controller("AccountController", ["$scope", "$http", "$timeout", "$
                 newUserHash = appAPI.getSHA2(user.email + mainHash);
                 newPass = appAPI.getSHA2(mainHash);
 
-                appAPI.getDecBytes(oldUserHash + $scope.pin, user.salt).then(function(decBytes){
+                appAPI.getSeed(oldUserHash, $scope.pin + "" + user.id).then(function(seed){
                     // Encrypt Bytes
-                    appAPI.encryptAES(decBytes, newUserHash + $scope.pin, user.salt, true).then(function(enc_seed) {
+                    appAPI.encryptAES(seed, newUserHash, $scope.pin + ""+ user.id, true).then(function(enc_seed) {
                         console.log('Bytes re-encrypted : ' + enc_seed);
                         postObj = {
                             oldpass: oldPass,
@@ -64,50 +95,42 @@ coinvoyWallet.controller("AccountController", ["$scope", "$http", "$timeout", "$
                             enc_seed: enc_seed
                         };
 
-                        var changeReq = $http.post("/wallet/api/change_password", postObj);
-                        changeReq.success(function(data, status){
+                        $http.post("/wallet/api/change_password", postObj).success(function(data, status){
                             if(data.success) {
                                 // apply new user hash
                                 createCookie('userHash',newUserHash,1);
-                                $scope.changeSuccess = true;
-                                $scope.changeMsg = "Password successfully changed.".translate();
+                                $scope.changeSuccess = "Password successfully changed.".translate();
                             } else {
-                                $scope.changeError = true;
-                                $scope.changeMsg = "Please enter a correct password.".translate();
+                                $scope.changeError = "Please enter a correct password.".translate();
                             }
                         }).error(function(){
-                            $scope.changeError = true;
-                            $scope.changeMsg = "An error occurred. Sorry.".translate();
+                            $scope.changeError = "An error occurred. Sorry.".translate();
                         });
 
                         $timeout(function(){
                             $scope.changeSuccess = false;
                             $scope.changeError = false;
-                            $scope.changeMsg = false;
                             $scope.changePassBox = false;
                         },5000);
                     });
 
                 }).catch(function(error) {
-                    if(error == 101) {
-                        $this.error = "Couldn't get the bytes.";
-                    } else if(error == 102) {
-                        $this.error = "Error decrypting bytes.";
-                    } else {
-                        $this.error = "Error getting extra bytes.";
-                    }
+                    if(error == 101) $this.error = "Couldn't get the bytes.";
+                    else if(error == 102) $this.error = "Error decrypting bytes.";
+                    else $this.error = "Error getting extra bytes.";
                 });
             });
         });
     };
 
+    $scope.fileSelect = function() {
+        document.getElementById("avatarSelect").click();
+    }
+
     // UPLOADER
-    var uploader = $scope.uploader = new FileUploader({
-        url: '/wallet/api/set_avatar'
-    });
+    var uploader = $scope.uploader = new FileUploader();
     // FILTERS
-    uploader.filters.push({
-        name: 'imageFilter',
+    uploader.filters.push({name: 'imageFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
             return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
@@ -228,7 +251,4 @@ coinvoyWallet.controller("AccountController", ["$scope", "$http", "$timeout", "$
             $scope.avatarMessage = "";
         },2000);
     };
-    $scope.fileSelect = function() {
-        document.getElementById("avatarSelect").click();
-    }
 }]);

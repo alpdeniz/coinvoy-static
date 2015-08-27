@@ -146,6 +146,23 @@ coinvoyWallet.factory('appAPI',["$q", "$timeout", "$http", function($q,$timeout,
         return deferred.promise;
     };
 
+    appAPI.get_market = function() {
+        appAPI.working = "Getting market...";
+        var deferred = $q.defer();
+
+        $http.get("/wallet/api/get_market").success(function(data, status, headers, config) {
+            appAPI.working = "";
+            if(data.success)
+                deferred.resolve(data);
+            else
+                deferred.reject();
+        }).error(function(data, status, headers, config) {
+            appAPI.working = "";
+            deferred.reject();
+        });
+        return deferred.promise;
+    }
+
     appAPI.finalizeConfirm = function(postObj) {
         appAPI.working = "Finalizing registration...";
         var deferred = $q.defer();

@@ -3,6 +3,12 @@ coinvoyWallet.config(["$routeProvider", "$locationProvider", function($routeProv
     var checkLogin = {"data": ['Auth', function(Auth) {
         return Auth.checkLogin()
     }]};
+    var checkMarket = {"data": ['Auth', function(Auth) {
+        return Auth.checkMarket()
+    }]};
+    var checkItem = {"data": ['Auth', '$route', function(Auth, $route) {
+        return Auth.checkItem($route.current.params.item_id)
+    }]};
     var checkAdminLogin = {"data": ['Auth', function(Auth) {
         return Auth.checkAdminLogin()
     }]};
@@ -20,6 +26,16 @@ coinvoyWallet.config(["$routeProvider", "$locationProvider", function($routeProv
         controller: 'WalletController',
         templateUrl: '/static/html/app/wallet.html',
         resolve: checkLogin
+    })
+    .when('/market', {
+        controller: 'MarketController',
+        templateUrl: '/static/html/app/market.html',
+        resolve: checkMarket
+    })
+    .when('/item/:item_id', {
+        controller: 'ItemController',
+        templateUrl: '/static/html/app/item.html',
+        resolve: checkItem
     })
     .when('/newWallet/:code', {
         controller: 'NewWalletController',

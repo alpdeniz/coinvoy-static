@@ -39,7 +39,7 @@ coinvoyWallet.factory('Auth', ['$q','$http','$location','appAPI',function($q, $h
             if(window.user)
                 return true;
             var deferred = $q.defer();
-            if(!user) {
+            if(!window.user) {
                 loggingIn = "Logging in...";
                 $this = this;
                 appAPI.login().then(function(user) {
@@ -48,7 +48,46 @@ coinvoyWallet.factory('Auth', ['$q','$http','$location','appAPI',function($q, $h
                     $this.setUser(user);
                     deferred.resolve(user);
                 }).catch(function(){
+                    if(!window.market)
+                        $location.path('/');
                     loggingIn = false;
+                    deferred.resolve();
+                });
+            } else {
+                deferred.resolve();
+            }
+            return deferred.promise;
+        },
+        checkItem: function(item_id) {
+            var deferred = $q.defer();
+            this.checkMarket().then(function() {
+                for(var i=0; i < window.market.products.length; i++) {
+                    if(window.market.products[i].id == item_id) {
+                        window.market.item = window.market.products[i];
+                        deferred.resolve();
+                    }
+                }
+            });
+            return deferred.promise;
+        },
+        checkMarket: function(path) {
+            if(window.market)
+                return true;
+            var deferred = $q.defer();
+            if(!window.market) {
+                var $this = this;
+                appAPI.get_market().then(function(market) {
+                    window.market = market;
+                    if(!window.user) {
+                        appAPI.login().then(function(user) {
+                            // LOGIN
+                            $this.setUser(user);
+                            deferred.resolve();
+                        }).catch(function(){
+                            deferred.resolve();
+                        });
+                    }
+                }).catch(function(){
                     $location.path('/');
                     deferred.resolve();
                 });

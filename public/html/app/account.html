@@ -26,7 +26,7 @@
                 {{user.name}}
             </div>
         </div> -->
-        <div class="row setting-section">
+        <div class="row rowBtn">
             <div class="row setting-item">
                 <div class="col-sm-3 setting-label">
                     E-mail
@@ -61,20 +61,20 @@
                     {{updateMessage}}
                 </div>
             </div>
-        </div>
-        <div class="row setting-section" style="margin-top:25px;">
+        <!-- </div>
+        <div class="row setting-section" style="margin-top:25px;"> -->
             <div class="row setting-item">
                 <div class="col-sm-3 setting-label" style="margin-top:0;">
                     <div>Avatar</div>
                 </div>
-                <div class="col-sm-9 drop-field" nv-file-drop nv-file-over uploader="uploader">
+                <div class="col-sm-9 drop-field" nv-file-drop nv-file-over uploader="uploader" options="{ url: '/wallet/api/set_avatar' }">
                     <div>
                         <div>Drop your new avatar here</div>
                         <div style="text-align:center;"><img ng-src="{{user.avatar}}" class="avatar" style="margin:10px;"/></div>
                     </div>
                     <div>
                         <button class="btn btn-warning hideInput" ng-click="fileSelect()">or choose one</button>
-                        <input id="avatarSelect" style="display:none;" type="file" nv-file-select uploader="uploader"/>
+                        <input id="avatarSelect" style="display:none;" type="file" nv-file-select uploader="uploader" options="{ url: '/wallet/api/set_avatar' }"/>
                     </div>
                     <div style="margin:5px 0;height:15px;">
                         <div style="height:4px;background:green;width:{{uploader.progress%100}}%;">
@@ -90,7 +90,126 @@
         </div>
         
     </div>
-    <div class="col-sm-4 col-sm-offset-1 col-xs-12" style="padding:10px;">
+    <div class="col-sm-5 col-xs-12">
+        <div class="row rowBtn">
+            <div ng-click="merchantBox=!merchantBox">
+                Merchant Setup
+            </div>
+            <div ng-show="merchantBox">
+                <div class="row setting-item">
+                    <div class="col-sm-4 setting-label">
+                        Name
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="user.merchant.name" style="text-align:center;"/>
+                    </div>
+                </div>
+                <div class="row setting-item">
+                    <div class="col-sm-4 setting-label">
+                        Motto
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="user.merchant.slogan" style="text-align:center;"/>
+                    </div>
+                </div>
+                <div class="row setting-item">
+                    <div class="col-sm-4 setting-label">
+                        Address Line
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="user.merchant.address_1" style="text-align:center;"/>
+                    </div>
+                </div>
+                <div class="row setting-item">
+                    <div class="col-sm-4 setting-label">
+                        Address Line 2
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="user.merchant.address_2" style="text-align:center;"/>
+                    </div>
+                </div>
+                <div class="row setting-item">
+                    <div class="col-sm-offset-8 col-sm-4">
+                        <button class="btn btn-warning" style="padding:6px 30px;float:right;" ng-click="updateMerchantSettings();">Update</button>
+                    </div>
+                </div>
+                <div class="row setting-item" style="margin-top:0px;">
+                    <div class="col-sm-offset-6 col-sm-6" style="height:6px;margin-top:-6px;text-align:right;font-size:80%;color:#888;">
+                        {{merchantUpdateMessage}}
+                    </div>
+                </div>
+                <div>
+                    Products
+                </div>
+                <div class="row setting-item">
+                    <div class="col-sm-12">
+                        <div class="row product-row" ng-repeat="p in user.merchant.products">
+                            <div class="col-xs-7">
+                                <div class="name">
+                                    {{p.name}}
+                                </div>
+                                <div class="description">
+                                    <span>{{p.description}} </span><span> {{p.amount}} {{p.currency}}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-5">
+                                <div style="padding:6px;float:left;width:100%;" class="drop-field" nv-file-drop nv-file-over uploader="uploader" options="{ url: '/wallet/api/add_image', formData: [{ product_id: {{p.id}} }] }">
+                                    <div class="subtext" style="float:left;width:100%;">Drag images here</div>
+                                    <img src="{{i}}" style="float:left;height:30px;" ng-repeat="i in p.images" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row setting-item">
+                    <div class="col-sm-offset-8 col-sm-4">
+                        <button class="btn btn-warning" style="padding:6px 30px;float:right;" ng-if="!product" ng-click="newProduct()">Add Product</button>
+                    </div>
+                </div>
+                <div ng-show="product">
+                    <div class="row setting-item">
+                        <div class="col-sm-4 setting-label">
+                            Name
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" ng-model="product.name" style="text-align:center;"/>
+                        </div>
+                    </div>
+                    <div class="row setting-item">
+                        <div class="col-sm-4 setting-label">
+                            Description
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" ng-model="product.description" style="text-align:center;"/>
+                        </div>
+                    </div>
+                    <div class="row setting-item">
+                        <div class="col-sm-3 setting-label">
+                            Amount
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" ng-model="product.amount" style="text-align:center;"/>
+                        </div>
+                        <div class="col-sm-3 setting-label">
+                            Currency
+                        </div>
+                        <div class="col-sm-3">
+                            <select ng-model="product.currency" ng-options="c for c in ['BTC','USD']" style="padding: 3px;margin-bottom: 8px;width:99%;"></select>
+                        </div>
+                    </div>
+                    <div class="row setting-item">
+                        <div class="col-sm-9">
+                            
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-warning" style="padding:6px 30px;float:right;" ng-if="product" ng-click="addProduct()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
         <div class="row rowBtn">
             <div ng-click="changePassBox=!changePassBox">{{msgs.changePass.translate()}}</div>
             <div class="modalMsg" ng-class="{'errorMsg' : changeError, 'successMsg': changeSuccess}" ng-show="changeMsg">
@@ -109,14 +228,11 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top:5px;margin-bottom:5px;">
-                    <div class="col-sm-4 col-sm-offset-4" style="padding-right:5px;">
-                        <button class="btn btn-primary" style="padding:2.5px 6px;" ng-click="changePass()">{{msgs.changeBtn.translate()}}</button>
+                    <div class="col-sm-4 col-sm-offset-8" style="padding-right:5px;">
+                        <button class="btn btn-warning" style="padding:6px 30px;float:right;" ng-click="changePass()">Change</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row rowBtn">
-            <div ng-click="toPage('recoverPIN')">{{msgs.recoverPIN.translate()}}</div>
         </div>
     </div>
 </div>

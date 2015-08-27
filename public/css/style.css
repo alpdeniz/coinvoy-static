@@ -366,12 +366,12 @@ input.error {
 .tx-middle {
 	width:60%;float:left;padding:8px;margin-left:10px;
 }
-.tx-middle>.tx-text {
-	font-size: 120%;
+.emphasize {
+	font-size: 110%;
 	font-weight: 500;
 }
-.tx-middle>.tx-message {
-	font-size: 100%;
+.subtext {
+	font-size: 90%;
 	font-weight: 400;
 	color:#555;
 }
@@ -600,13 +600,14 @@ input.error {
 
 .rowBtn {
 	margin-top:10px;
-	background-color:rgba(210,210,210,0.4);
-	padding:6px;
+	background-color:rgba(210,210,210,0.5);
+	padding:10px;
 	cursor:pointer;
 	transition: all 0.2s;
+	margin-left:10px;
 }
 .rowBtn:hover {
-	background-color:rgba(254,254,254,0.6);
+	background-color:rgba(210,210,210,0.75);
 }
 
 .newTx {
@@ -867,8 +868,8 @@ form > .row {
 	box-shadow: -1px 1px 1px 2px #bbb;
 }
 .setting-item {
-	padding:6px;
-	margin-top:10px;
+	padding:4px;
+	margin-top:6px;
 }
 .setting-label {
 	font-weight: bold;
@@ -879,13 +880,16 @@ form > .row {
 	background-color: rgba(70,170,70,0.3);
 }
 .drop-field {
-	padding-top: 12px;
+	padding-top: 6px;
 	border: 1px solid #ddd;
 	margin: auto;
-	width: 70%;
+	width: 74%;
 }
 .drop-field:hover {
 	background-color: rgba(70,170,70,0.1);
+}
+.product-row div {
+	text-align: left;
 }
 /*********** NEW WALLET **************/
 .mnemonic {
@@ -895,6 +899,17 @@ form > .row {
 	background-color: rgba(50,150,50,0.8);
 	color: rgb(250, 250, 250);
 	font-size: 16px;font-weight: 600;
+}
+
+/*********** MARKET ******************/
+.product {
+	float:left;
+	border-radius: 2px;
+	border:1px solid #aaa;
+	padding: 6px;
+	height: auto;
+	width: 140px;
+	margin: 5px;
 }
 
 

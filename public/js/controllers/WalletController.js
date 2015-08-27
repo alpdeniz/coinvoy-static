@@ -12,7 +12,7 @@ coinvoyWallet.controller("WalletController", ["$scope", "$http", "$timeout", "$l
     $scope.ui = {balance: 0.0000, feed: []};
     // build user view data
     try {
-        if(user)
+        if(window.user)
             $scope.user = {
                 id: user.id,
                 name: user.name,

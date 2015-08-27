@@ -1,0 +1,35 @@
+<style>
+	body {
+        background-color: rgba(233,233,233, 0.05);
+    }
+    .bodyDiv {
+        background-color: none;
+    }
+    .headerRow {
+        background-color: rgb(80,170,80);
+        color: white;
+    }
+    .content {
+    	position: static;
+    }
+</style>
+<div style="font-size:16px;" ng-if="$parent.pageReset">
+
+	<div class="row content">
+        <div class="col-sm-2 col-xs-12">
+            Filters
+        </div>
+		<div class="col-sm-10 col-xs-12">
+            <div class="product" ng-repeat="p in products">
+                <div class="image">
+                    <img ng-if="p.images[0]" src="{{p.images[0]}}" style="width:100%;"/>
+                </div>
+                <div class="emphasize">
+                    {{p.name}}
+                </div>
+                <div class="subtext">
+                    <span>{{p.description}}</span><span>{{p.amount}} {{p.currency}}</span>
+                </div>
+            </div>
+        </div>
+    </div>

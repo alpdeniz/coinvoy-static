@@ -81,11 +81,11 @@
                     <div ng-click="openLoginBox()">
                         {{::msg.login}}
                     </div>
-                    <div>
+                    <!-- <div>
                         <a href="/merchants">
                             {{::msg.merchants}}
                         </a>
-                    </div>
+                    </div> -->
                     <div ng-click="toPage('')" ng-class="{'active': page == 'home'}">
                         {{::msg.home}}
                     </div>
@@ -237,6 +237,7 @@
     <script type="text/javascript" src="/static/js/controllers/app/router.js"></script>
     <!-- view controllers -->
     <script type="text/javascript" src="/static/js/controllers/WalletController.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/MarketController.js"></script>
     <script type="text/javascript" src="/static/js/controllers/NewWalletController.js"></script>
     <script type="text/javascript" src="/static/js/controllers/AccountController.js"></script>
     <script type="text/javascript" src="/static/js/controllers/PanelController.js"></script>
