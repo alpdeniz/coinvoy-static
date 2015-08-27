@@ -3,7 +3,7 @@ coinvoyWallet.factory('TxSocket', function($websocket) {
     var openSocket = function(userId) {
 
         // Open a WebSocket connection
-        this.dataStream = $websocket("ws://localhost/wallet/ws/live");
+        this.dataStream = $websocket("wss://coinvoy.net/wallet/ws/live");
 
         this.transactions = [];
         this.userId = userId;
